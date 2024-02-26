@@ -1,21 +1,22 @@
 ﻿namespace Translate.Implementations;
 
 using Resources;
+using Translate.Contracts;
 
-public class TranslateToInternational
+public class TranslateToInternational : ITranslate
 {
-    public string[] UserInput { get; set; }
-
-    private string TranslationSetPath { get; } =
-        "C:\\Users\\alecj\\OneDrive - UWE Bristol\\Year2\\OOP2\\Morsecode Translator\\src\\OOP2.MorecodeTranslator\\Resources\\Translation Sets\\international.txt";
-
-    public string[,] TranslationTable { get; set; }
-
     public TranslateToInternational()
     {
         this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
         this.UserInput = this.GetUserInput();
     }
+
+    public string[] UserInput { get; set; }
+
+    public string TranslationSetPath { get; } =
+        "C:\\Users\\alecj\\OneDrive - UWE Bristol\\Year2\\OOP2\\Morsecode Translator\\src\\OOP2.MorecodeTranslator\\Resources\\Translation Sets\\international.txt";
+
+    public string[,] TranslationTable { get; set; }
 
     private string[] GetUserInput()
     {
