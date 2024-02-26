@@ -11,7 +11,7 @@ public class TrainInternational : ITrain
     }
     public string TranslationSet { get; set; } = "C:\\Users\\alecj\\OneDrive - UWE Bristol\\Year2\\OOP2\\Morsecode Translator\\src\\OOP2.MorecodeTranslator\\Resources\\Translation Sets\\international.txt";
     public string[,] TranslationTable { get; set; }
-    public string[] TrainingResults { get; set; }
+    public string[] TrainingResults { get; set; } = new string[15];
 
     public void Train()
     {

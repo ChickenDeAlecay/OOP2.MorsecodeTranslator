@@ -10,11 +10,11 @@ public static class Program
 {
     private static void Main(string[] args)
     {
-        Console.Clear();
-
         bool exit;
         do
         {
+            Console.Clear();
+
             var menuOption = DisplayMenu.CreateMenu(new[] { "Translate", "Train", "Exit" });
 
             switch (menuOption)
@@ -39,11 +39,11 @@ public static class Program
 
     private static void Translate()
     {
-        Console.Clear();
-
         bool exit;
         do
         {
+            Console.Clear();
+
             var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American", "Exit" });
 
             switch (menuOption)
@@ -66,11 +66,10 @@ public static class Program
 
     private static void Train()
     {
-        Console.Clear();
-
         bool exit;
         do
         {
+            Console.Clear();
             var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American", "Exit" });
             ITrain training;
 
