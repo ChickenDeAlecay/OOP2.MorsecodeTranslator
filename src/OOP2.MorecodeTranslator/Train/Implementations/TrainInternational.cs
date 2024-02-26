@@ -7,33 +7,41 @@ public class TrainInternational : ITrain
 {
     public TrainInternational()
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(TranslationSet);
+        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSet);
     }
-    public string TranslationSet { get; set; } = "C:\\Users\\alecj\\OneDrive - UWE Bristol\\Year2\\OOP2\\Morsecode Translator\\src\\OOP2.MorecodeTranslator\\Resources\\Translation Sets\\international.txt";
+
+    public string TranslationSet { get; set; } =
+        "C:\\Users\\alecj\\OneDrive - UWE Bristol\\Year2\\OOP2\\Morsecode Translator\\src\\OOP2.MorecodeTranslator\\Resources\\Translation Sets\\international.txt";
+
     public string[,] TranslationTable { get; set; }
     public string[] TrainingResults { get; set; } = new string[15];
 
     public void Train()
     {
         Console.Clear();
-        Console.WriteLine("Morsecode Training - International:");
+        Console.WriteLine("Morsecode Training - International:\n");
 
-        Random random = new Random();
+        var random = new Random();
+        var generatedInts = new List<int>();
 
-        for (int i = 0; i < 15; i++)
+        for (var i = 0; i < 15; i++)
         {
-            var randomIndex = random.Next(0, 35);
+            int randomIndex;
+            do
+            {
+                randomIndex = random.Next(0, 35);
+            } while (generatedInts.Contains(randomIndex));
+
+            generatedInts.Add(randomIndex);
+
             Console.WriteLine($"Question {i}. What is {this.TranslationTable[randomIndex, 1]}");
             Console.Write("Enter Answer: ");
-            var answer = Console.ReadLine().ToUpper();
-            RecordResult(answer, randomIndex, i);
+            var answer = Console.ReadLine()!.ToUpper();
+            this.RecordResult(answer, randomIndex, i);
         }
 
         Console.Clear();
-        foreach (var result in this.TrainingResults)
-        {
-            Console.WriteLine(result);
-        }
+        foreach (var result in this.TrainingResults) Console.WriteLine(result);
 
         Console.Write("Press any key to continue.");
         Console.ReadKey();
@@ -42,12 +50,10 @@ public class TrainInternational : ITrain
     private void RecordResult(string answer, int index, int i)
     {
         if (this.TranslationTable[index, 0] == answer)
-        {
-            this.TrainingResults[i] = $"Question {i + 1}. {this.TranslationTable[index, 1]} = {this.TranslationTable[index, 0]} - Correct";
-        }
+            this.TrainingResults[i] =
+                $"Question {i + 1}. {this.TranslationTable[index, 1]} = {this.TranslationTable[index, 0]} - Correct";
         else
-        {
-            this.TrainingResults[i] = $"Question {i + 1}. {this.TranslationTable[index, 1]} = {this.TranslationTable[index, 0]} - Wrong - Your answer was {answer}";
-        }
+            this.TrainingResults[i] =
+                $"Question {i + 1}. {this.TranslationTable[index, 1]} = {this.TranslationTable[index, 0]} - Wrong - Your answer was {answer}";
     }
 }
