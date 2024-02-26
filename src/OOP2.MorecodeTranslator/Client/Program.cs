@@ -10,6 +10,8 @@ public static class Program
 {
     private static void Main(string[] args)
     {
+        Console.Clear();
+
         bool exit;
         do
         {
@@ -37,6 +39,8 @@ public static class Program
 
     private static void Translate()
     {
+        Console.Clear();
+
         bool exit;
         do
         {
@@ -62,6 +66,8 @@ public static class Program
 
     private static void Train()
     {
+        Console.Clear();
+
         bool exit;
         do
         {
@@ -72,6 +78,7 @@ public static class Program
             {
                 case 1:
                     training = new TrainInternational();
+                    training.Train();
                     exit = false;
                     break;
                 case 2:
