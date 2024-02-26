@@ -1,6 +1,8 @@
 ﻿namespace Morsecode_Translator.Implementations;
 
 using Menu;
+using Train.Contracts;
+using Train.Implementations;
 
 //TEST
 
@@ -11,16 +13,16 @@ public static class Program
         bool exit;
         do
         {
-            var menuOption = DisplayMenu.CreateMenu(new[] { "American", "International", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[] { "Translate", "Train", "Exit" });
 
             switch (menuOption)
             {
                 case 1:
-                    Program.American();
+                    Program.Translate();
                     exit = false;
                     break;
                 case 2:
-                    Program.International();
+                    Program.Train();
                     exit = false;
                     break;
                 case 3:
@@ -33,12 +35,12 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void American()
+    private static void Translate()
     {
         bool exit;
         do
         {
-            var menuOption = DisplayMenu.CreateMenu(new[] { "Translate", "Train", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American", "Exit" });
 
             switch (menuOption)
             {
@@ -58,19 +60,23 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void International()
+    private static void Train()
     {
         bool exit;
         do
         {
-            var menuOption = DisplayMenu.CreateMenu(new[] { "Translate", "Train", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American", "Exit" });
+            ITrain training;
 
             switch (menuOption)
             {
                 case 1:
+                    training = new TrainInternational();
                     exit = false;
                     break;
                 case 2:
+                    training = new TrainAmerican();
+                    training.Train();
                     exit = false;
                     break;
                 case 3:
