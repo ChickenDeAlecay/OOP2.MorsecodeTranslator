@@ -7,10 +7,10 @@ public class TrainAmerican : ITrain
 {
     public TrainAmerican()
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSet);
+        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
     }
 
-    public string TranslationSet { get; set; } =
+    public string TranslationSetPath { get; } =
         "C:\\Users\\alecj\\OneDrive - UWE Bristol\\Year2\\OOP2\\Morsecode Translator\\src\\OOP2.MorecodeTranslator\\Resources\\Translation Sets\\american.txt";
 
     public string[,] TranslationTable { get; set; }

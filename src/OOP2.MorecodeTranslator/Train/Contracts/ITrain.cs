@@ -2,7 +2,7 @@
 
 public interface ITrain
 {
-    public string TranslationSet { get; set; }
+    public string TranslationSetPath { get; }
 
     public string[,] TranslationTable { get; set; }
 
