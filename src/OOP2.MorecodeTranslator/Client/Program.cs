@@ -16,9 +16,11 @@ public static class Program
             switch (menuOption)
             {
                 case 1:
+                    Program.American();
                     exit = false;
                     break;
                 case 2:
+                    Program.International();
                     exit = false;
                     break;
                 case 3:
