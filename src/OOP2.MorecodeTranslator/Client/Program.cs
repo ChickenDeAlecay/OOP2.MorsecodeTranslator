@@ -15,6 +15,31 @@ public static class Program
         {
             Console.Clear();
 
+            var menuOption = DisplayMenu.CreateMenu(new[] { "Login", "Exit" });
+
+            switch (menuOption)
+            {
+                case 1:
+                    Program.SelectSet();
+                    exit = false;
+                    break;
+                case 2:
+                    exit = true;
+                    break;
+                default:
+                    exit = false;
+                    break;
+            }
+        } while (exit == false);
+    }
+
+    private static void SelectSet()
+    {
+        bool exit;
+        do
+        {
+            Console.Clear();
+
             var menuOption = DisplayMenu.CreateMenu(new[] { "Translate", "Train", "Exit" });
 
             switch (menuOption)
