@@ -1,8 +1,8 @@
-﻿namespace Morsecode_Translator.Implementations;
-
-using Menu;
+﻿using Menu;
 using Train.Contracts;
 using Train.Implementations;
+
+namespace Client;
 
 //TEST
 
