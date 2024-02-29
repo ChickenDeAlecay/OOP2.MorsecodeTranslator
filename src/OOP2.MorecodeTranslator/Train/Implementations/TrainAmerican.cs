@@ -10,8 +10,7 @@ public class TrainAmerican : ITrain
         this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
     }
 
-    public string TranslationSetPath { get; } =
-        "C:\\Users\\alecj\\OneDrive - UWE Bristol\\Year2\\OOP2\\Morsecode Translator\\src\\OOP2.MorecodeTranslator\\Resources\\Translation Sets\\american.txt";
+    public string TranslationSetPath { get; } = "Translation Sets\\american.txt";
 
     public string[,] TranslationTable { get; set; }
     public string[] TrainingResults { get; set; } = new string[15];
