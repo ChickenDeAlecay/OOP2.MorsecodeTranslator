@@ -3,20 +3,16 @@
 using Resources;
 using Translate.Contracts;
 
-public class TranslateToInternational : ITranslate
+public class TranslateFromInternational : ITranslate
 {
-    public TranslateToInternational()
+    public TranslateFromInternational()
     {
         this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
     }
-
     public string TranslationSetPath => "Translation Sets\\international.txt";
-
     public string[,] TranslationTable { get; set; }
-
     public void GetUserInput()
     {
-        Console.WriteLine("Enter the string you would like to translate to morsecode");
-        var usersString = Console.ReadLine();
+        throw new NotImplementedException();
     }
 }

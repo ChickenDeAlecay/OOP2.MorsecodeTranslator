@@ -8,7 +8,7 @@ public abstract class BaseUserAccount
 {
     internal static string HidePassword()
     {
-        var userPassword = "";
+        var userPassword = string.Empty;
         ConsoleKey key;
 
         do
