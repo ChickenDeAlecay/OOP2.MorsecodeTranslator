@@ -27,7 +27,7 @@ public static class ReadTranslationSet
             translationSet[iteration, 0] = numberTranslations[0];
             translationSet[iteration, 1] = numberTranslations[1];
 
-            iteration = iteration + 1;
+            iteration += 1;
         }
 
         return translationSet;

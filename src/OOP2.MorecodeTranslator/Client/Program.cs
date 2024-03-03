@@ -1,8 +1,8 @@
-﻿using Menu;
+﻿namespace Client;
+
+using Menu;
 using Train.Contracts;
 using Train.Implementations;
-
-namespace Client;
 
 //TEST
 
@@ -15,15 +15,19 @@ public static class Program
         {
             Console.Clear();
 
-            var menuOption = DisplayMenu.CreateMenu(new[] { "Login", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[] { "Login", "Register", "Exit" });
 
             switch (menuOption)
             {
                 case 1:
-                    Program.SelectSet();
+                    if (UserAccountLogin.LoginUser()) Program.SelectSet();
                     exit = false;
                     break;
                 case 2:
+                    UserAccountRegister.RegisterUser();
+                    exit = false;
+                    break;
+                case 3:
                     exit = true;
                     break;
                 default:
