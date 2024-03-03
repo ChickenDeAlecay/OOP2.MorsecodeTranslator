@@ -70,7 +70,7 @@ public abstract class BaseUserAccount
         var salt = Encoding.ASCII.GetBytes(userUsername + userUsername.Length);
 
         // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
-        var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+        var hashed = Convert.ToBase64String((byte[])KeyDerivation.Pbkdf2(
             userPassword!,
             salt,
             KeyDerivationPrf.HMACSHA256,

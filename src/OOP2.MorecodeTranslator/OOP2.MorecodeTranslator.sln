@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accounts", "Accounts", "{C2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Encryption", "Encryption", "{2A685C14-7840-49C4-B681-3FE530A2A625}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagment", "UserManagment\UserManagment.csproj", "{AC5F02AE-62B2-4A65-9C95-ED36783B2EE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{01A02811-F3E0-4341-9F65-613D0F678B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01A02811-F3E0-4341-9F65-613D0F678B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01A02811-F3E0-4341-9F65-613D0F678B6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC5F02AE-62B2-4A65-9C95-ED36783B2EE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC5F02AE-62B2-4A65-9C95-ED36783B2EE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC5F02AE-62B2-4A65-9C95-ED36783B2EE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC5F02AE-62B2-4A65-9C95-ED36783B2EE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{E55099CA-7B1D-46AF-92C9-97F2F1D9A8ED} = {D1A6412C-BA56-4929-9001-B01973DA64D3}
 		{6F13B818-0528-46CE-AA67-EDC343B63190} = {B64E651F-8A4E-4D35-A931-BDFB88727044}
 		{01A02811-F3E0-4341-9F65-613D0F678B6D} = {2F07AA7A-2F61-42C8-B0D0-A1D3279786BD}
+		{AC5F02AE-62B2-4A65-9C95-ED36783B2EE2} = {CB032E41-BA9D-4BDD-8863-4EBC6F23E38F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE1D3D2E-FE2E-4F23-83A7-A04D1F48AC81}
