@@ -10,7 +10,7 @@ public class TrainInternational : ITrain
         this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
     }
 
-    public string TranslationSetPath { get; } = "Translation Sets\\international.txt";
+    public string TranslationSetPath => "Translation Sets\\international.txt";
 
     public string[,] TranslationTable { get; set; }
     public string[] TrainingResults { get; set; } = new string[15];

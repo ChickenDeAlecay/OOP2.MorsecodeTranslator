@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Menu\Menu.csproj" />
     <ProjectReference Include="..\Train\Train.csproj" />
+    <ProjectReference Include="..\Translate\Translate.csproj" />
     <ProjectReference Include="..\UserManagment\UserManagment.csproj" />
   </ItemGroup>
 

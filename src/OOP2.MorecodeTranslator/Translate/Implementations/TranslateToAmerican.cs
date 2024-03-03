@@ -13,12 +13,11 @@ public class TranslateToAmerican : ITranslate
 
     public string[] UserInput { get; set; }
 
-    public string TranslationSetPath { get; } =
-        "C:\\Users\\alecj\\OneDrive - UWE Bristol\\Year2\\OOP2\\Morsecode Translator\\src\\OOP2.MorecodeTranslator\\Resources\\Translation Sets\\american.txt";
+    public string TranslationSetPath => "Translation Sets\\american.txt";
 
     public string[,] TranslationTable { get; set; }
 
-    private string[] GetUserInput()
+    public string[] GetUserInput()
     {
         Console.WriteLine("Enter the string you would like to translate to morsecode");
         var usersString = Console.ReadLine();

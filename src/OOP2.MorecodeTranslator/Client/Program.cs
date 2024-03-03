@@ -3,6 +3,8 @@
 using Menu;
 using Train.Contracts;
 using Train.Implementations;
+using Translate.Contracts;
+using Translate.Implementations;
 
 //TEST
 
@@ -72,15 +74,19 @@ public static class Program
         do
         {
             Console.Clear();
-
             var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American", "Exit" });
+            ITranslate translate;
 
             switch (menuOption)
             {
                 case 1:
+                    translate = new TranslateToInternational();
+                    translate.GetUserInput();
                     exit = false;
                     break;
                 case 2:
+                    translate = new TranslateToAmerican();
+                    translate.GetUserInput();
                     exit = false;
                     break;
                 case 3:
