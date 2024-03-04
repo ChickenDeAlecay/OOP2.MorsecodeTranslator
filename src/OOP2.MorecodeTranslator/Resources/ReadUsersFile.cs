@@ -2,9 +2,9 @@
 
 public static class ReadUsersFile
 {
-    public static string[,] GetUsersInfo()
+    public static string[,] GetUsersInfo(string path)
     {
-        var file = File.ReadAllLines("Users\\Logins.csv");
+        var file = File.ReadAllLines(path);
 
         var usersInformation = new string[file.Length, 2];
 

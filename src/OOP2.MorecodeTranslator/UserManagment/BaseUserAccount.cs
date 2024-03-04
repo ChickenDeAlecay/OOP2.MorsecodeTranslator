@@ -31,9 +31,11 @@ public abstract class BaseUserAccount
         return userPassword;
     }
 
-    internal static bool CheckUserExists(string userUsername)
+
+
+    internal static bool CheckUserExists(string userUsername, string path)
     {
-        var usersInfo = ReadUsersFile.GetUsersInfo();
+        var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
         for (var i = 0; i < usersInfo.Length / 2; i++)
             if (usersInfo[i, 0] == userUsername)
@@ -42,9 +44,9 @@ public abstract class BaseUserAccount
         return false;
     }
 
-    internal static bool VerifyPassword(string userUsername, string userPassword)
+    internal static bool VerifyPassword(string userUsername, string userPassword, string path)
     {
-        var usersInfo = ReadUsersFile.GetUsersInfo();
+        var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
         byte[] salt = { };
         var hash = string.Empty;
@@ -78,5 +80,21 @@ public abstract class BaseUserAccount
             256 / 8));
 
         return hashed;
+    }
+
+    internal static int DisplayAllAccounts(string[,] usersInfo)
+    {
+        var userUsernames = new string[usersInfo.Length/2+1];
+
+        Console.Clear();
+
+        for (int i = 0; i < usersInfo.Length / 2; i++)
+        {
+            userUsernames[i] = usersInfo[i,0];
+        }
+
+        userUsernames[usersInfo.Length / 2] = "Exit";
+
+        return DisplayMenu.CreateMenu(userUsernames);
     }
 }

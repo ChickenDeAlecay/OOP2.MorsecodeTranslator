@@ -2,7 +2,7 @@
 
 public class UserAccountLogin : BaseUserAccount
 {
-    public static bool LoginUser()
+    public static bool LoginUser(string path)
     {
         Console.Clear();
         do
@@ -13,14 +13,14 @@ public class UserAccountLogin : BaseUserAccount
             Console.Write("Enter your password: ");
             var userPassword = BaseUserAccount.HidePassword();
 
-            if (!BaseUserAccount.CheckUserExists(userUsername))
+            if (!BaseUserAccount.CheckUserExists(userUsername, path))
             {
                 Console.Clear();
                 Console.WriteLine("Username not found");
                 continue;
             }
 
-            if (!BaseUserAccount.VerifyPassword(userUsername, userPassword))
+            if (!BaseUserAccount.VerifyPassword(userUsername, userPassword, path))
             {
                 Console.Clear();
                 Console.WriteLine("Password incorrect");
@@ -29,11 +29,6 @@ public class UserAccountLogin : BaseUserAccount
 
             return true;
 
-            //Console.WriteLine(
-            //    "\n\nUsername or Password incorrect\n\nPress any key to try again or press escape to go back to the menu: ");
-
-            //var key = Console.ReadKey(true).Key;
-            //if (key == ConsoleKey.Escape) return false;
         } while (true);
     }
 }

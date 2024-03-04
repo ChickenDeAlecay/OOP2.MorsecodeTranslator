@@ -4,7 +4,7 @@ using System.Text;
 
 public class UserAccountRegister : BaseUserAccount
 {
-    public static void RegisterUser()
+    public static void RegisterUser(string path)
     {
         Console.Clear();
         do
@@ -25,7 +25,7 @@ public class UserAccountRegister : BaseUserAccount
                 continue;
             }
 
-            if (BaseUserAccount.CheckUserExists(userUsername))
+            if (BaseUserAccount.CheckUserExists(userUsername, path))
             {
                 Console.Clear();
                 Console.WriteLine("\nUsername already exists\n\n");
@@ -33,17 +33,16 @@ public class UserAccountRegister : BaseUserAccount
             }
 
             userPassword = BaseUserAccount.HashPassword(userUsername, userPassword);
-            UserAccountRegister.WriteUserToFile(userUsername, userPassword);
+            UserAccountRegister.WriteUserToFile(userUsername, userPassword, path);
 
             break;
         } while (true);
     }
 
-    private static void WriteUserToFile(string userUsername, string userPassword)
+    private static void WriteUserToFile(string userUsername, string userPassword, string path)
     {
-        var newUser = new List<string>();
-        newUser.Add(userUsername + ',' + userPassword);
+        var newUser = new List<string> { userUsername + ',' + userPassword };
 
-        File.AppendAllLines("Users\\Logins.csv", newUser, Encoding.UTF8);
+        File.AppendAllLines(path, newUser, Encoding.UTF8);
     }
 }

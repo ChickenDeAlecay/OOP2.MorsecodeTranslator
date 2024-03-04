@@ -17,16 +17,16 @@ public static class Program
         {
             Console.Clear();
 
-            var menuOption = DisplayMenu.CreateMenu(new[] { "Login", "Register", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[] { "User Login", "Admin Login", "Close Program" });
 
             switch (menuOption)
             {
                 case 1:
-                    if (UserAccountLogin.LoginUser()) Program.SelectSet();
+                    if (UserAccountLogin.LoginUser("Users\\Logins.csv")) Program.SelectMode();
                     exit = false;
                     break;
                 case 2:
-                    UserAccountRegister.RegisterUser();
+                    if (UserAccountLogin.LoginUser("Users\\Admin.csv")) Program.AdminManagement();
                     exit = false;
                     break;
                 case 3:
@@ -39,7 +39,50 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void SelectSet()
+    private static void AdminManagement()
+    {
+        bool exit;
+        do
+        {
+            Console.Clear();
+
+            var menuOption = DisplayMenu.CreateMenu(new[] 
+                { "Create New User", "Change User Details", "Delete User", "Create New Admin", "Change Admin Details", "Delete Admin", "Exit" });
+
+            switch (menuOption)
+            {
+                case 1:
+                    UserAccountRegister.RegisterUser("Users\\Logins.csv");
+                    exit = false;
+                    break;
+                case 2:
+                    UserAccountEdit.Edituser("Users\\Logins.csv");
+                    exit = false;
+                    break;
+                case 3:
+                    exit = true;
+                    break;
+                case 4:
+                    UserAccountRegister.RegisterUser("Users\\Admin.csv");
+                    exit = false;
+                    break;
+                case 5:
+                    UserAccountEdit.Edituser("Users\\Admin.csv");
+                    exit = false;
+                    break;
+                case 6:
+                    exit = false;
+                    break;
+                case 7:
+                    exit = true;
+                    break;
+                default:
+                    exit = false;
+                    break;
+            }
+        } while (exit == false);
+    }
+    private static void SelectMode()
     {
         bool exit;
         do
