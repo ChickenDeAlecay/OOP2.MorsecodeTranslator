@@ -2,23 +2,25 @@
 
 public static class ReadUsersFile
 {
-    public static string[,] GetUsersInfo(string path)
+    public static List<string> GetUsersInfo(string path)
     {
         var file = File.ReadAllLines(path);
 
-        var usersInformation = new string[file.Length, 2];
+        var usersList = new List<string>();
+        //var usersInformation = new string[file.Length, 2];
 
-        var iteration = 0;
+        //var iteration = 0;
         foreach (var lines in file)
         {
-            var temp = lines.Split(",");
+            usersList.Add(lines);
+            //var temp = lines.Split(",");
 
-            usersInformation[iteration, 0] = temp[0];
-            usersInformation[iteration, 1] = temp[1];
+            //usersInformation[iteration, 0] = temp[0];
+            //usersInformation[iteration, 1] = temp[1];
 
-            iteration += 1;
+            //iteration += 1;
         }
 
-        return usersInformation;
+        return usersList;
     }
 }

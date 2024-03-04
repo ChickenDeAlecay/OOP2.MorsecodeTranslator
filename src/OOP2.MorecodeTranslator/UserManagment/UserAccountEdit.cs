@@ -6,7 +6,7 @@ namespace Menu;
 
 public class UserAccountEdit : BaseUserAccount
 {
-    public static void Edituser(string path)
+    public static void EditUser(string path)
     {
         do
         {
@@ -14,10 +14,12 @@ public class UserAccountEdit : BaseUserAccount
 
             var selectedAccount = DisplayAllAccounts(usersInfo);
 
-            if (selectedAccount == usersInfo.Length/2+1)
+            if (selectedAccount == usersInfo.Count+1)
             {
                 break;
             }
+
+            var selectedUser = usersInfo[selectedAccount-1].Split(',');
 
             bool finishedEditing;
             do
@@ -29,12 +31,13 @@ public class UserAccountEdit : BaseUserAccount
                 switch (fieldToEdit)
                 {
                     case 1:
-                        usersInfo[selectedAccount - 1, 0] = ChangeUsername(path);
+                        //ISSUE - WHEN UPDATING USERNAME, CHANGES SALT AND PASSWORD HASH
+                        usersInfo[selectedAccount-1] = ChangeUsername(path) + ',' + selectedUser[1];
                         UpdateFile(usersInfo, path);
                         finishedEditing = true;
                         break;
                     case 2:
-                        usersInfo[selectedAccount - 1, 1] = ChangePassword(usersInfo[selectedAccount - 1, 0], path);
+                        usersInfo[selectedAccount - 1] = selectedUser[0] + ',' + ChangePassword(selectedUser[0], path);
                         UpdateFile(usersInfo, path);
                         finishedEditing = true;
                         break;
@@ -97,16 +100,5 @@ public class UserAccountEdit : BaseUserAccount
         } while (true);
 
         return newPassword;
-    }
-
-    private static void UpdateFile(string[,] updatedFile, string path)
-    {
-        var updatedFileList = new List<string>();
-        for (int i = 0; i < updatedFile.Length/2; i++)
-        {
-            updatedFileList.Add(updatedFile[i,0] + ',' + updatedFile[i,1]);
-        }
-
-        File.WriteAllLines(path, updatedFileList, Encoding.UTF8);
     }
 }

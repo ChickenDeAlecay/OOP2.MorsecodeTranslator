@@ -37,9 +37,18 @@ public abstract class BaseUserAccount
     {
         var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
-        for (var i = 0; i < usersInfo.Length / 2; i++)
-            if (usersInfo[i, 0] == userUsername)
+        //for (var i = 0; i < usersInfo.Length / 2; i++)
+        //    if (usersInfo[i, 0] == userUsername)
+        //        return true;
+
+        foreach (var user in usersInfo)
+        {
+            var userSplit = user.Split(',');
+            if (userSplit[0] == userUsername)
+            {
                 return true;
+            }
+        }
 
         return false;
     }
@@ -51,12 +60,22 @@ public abstract class BaseUserAccount
         byte[] salt = { };
         var hash = string.Empty;
 
-        for (var i = 0; i < usersInfo.Length / 2; i++)
-            if (usersInfo[i, 0] == userUsername)
+        //for (var i = 0; i < usersInfo.Length / 2; i++)
+        //    if (usersInfo[i, 0] == userUsername)
+        //    {
+        //        hash = usersInfo[i, 1];
+        //        salt = Encoding.ASCII.GetBytes(userUsername + userUsername.Length);
+        //    }
+
+        foreach (var users in usersInfo)
+        {
+            var userSplit = users.Split(",");
+            if (userSplit[0] == userUsername)
             {
-                hash = usersInfo[i, 1];
+                hash = userSplit[1];
                 salt = Encoding.ASCII.GetBytes(userUsername + userUsername.Length);
             }
+        }
 
         var hashToCompare = BaseUserAccount.HashPassword(userUsername, userPassword);
 
@@ -82,19 +101,25 @@ public abstract class BaseUserAccount
         return hashed;
     }
 
-    internal static int DisplayAllAccounts(string[,] usersInfo)
+    internal static int DisplayAllAccounts(List<string> usersInfo)
     {
-        var userUsernames = new string[usersInfo.Length/2+1];
+        var userUsernames = new string[usersInfo.Count+1];
 
         Console.Clear();
 
-        for (int i = 0; i < usersInfo.Length / 2; i++)
+        for (int i = 0; i < usersInfo.Count; i++)
         {
-            userUsernames[i] = usersInfo[i,0];
+            userUsernames[i] = usersInfo[i].Split(',')[0];
         }
 
-        userUsernames[usersInfo.Length / 2] = "Exit";
+
+        userUsernames[usersInfo.Count] = "Exit";
 
         return DisplayMenu.CreateMenu(userUsernames);
+    }
+
+    internal static void UpdateFile(List<string> updatedFile, string path)
+    {
+        File.WriteAllLines(path, updatedFile, Encoding.UTF8);
     }
 }

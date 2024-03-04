@@ -56,7 +56,7 @@ public static class Program
                     exit = false;
                     break;
                 case 2:
-                    UserAccountEdit.Edituser("Users\\Logins.csv");
+                    UserAccountEdit.EditUser("Users\\Logins.csv");
                     exit = false;
                     break;
                 case 3:
@@ -67,7 +67,7 @@ public static class Program
                     exit = false;
                     break;
                 case 5:
-                    UserAccountEdit.Edituser("Users\\Admin.csv");
+                    UserAccountEdit.EditUser("Users\\Admin.csv");
                     exit = false;
                     break;
                 case 6:
