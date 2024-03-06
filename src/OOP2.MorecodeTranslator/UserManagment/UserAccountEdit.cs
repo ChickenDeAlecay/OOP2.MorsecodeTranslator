@@ -1,8 +1,6 @@
-﻿using Resources;
-using System.IO;
-using System.Text;
+﻿namespace Menu;
 
-namespace Menu;
+using Resources;
 
 public class UserAccountEdit : BaseUserAccount
 {
@@ -12,14 +10,11 @@ public class UserAccountEdit : BaseUserAccount
         {
             var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
-            var selectedAccount = DisplayAllAccounts(usersInfo);
+            var selectedAccount = BaseUserAccount.DisplayAllAccounts(usersInfo);
 
-            if (selectedAccount == usersInfo.Count+1)
-            {
-                break;
-            }
+            if (selectedAccount == usersInfo.Count + 1) break;
 
-            var selectedUser = usersInfo[selectedAccount-1].Split(',');
+            var selectedUser = usersInfo[selectedAccount - 1].Split(',');
 
             bool finishedEditing;
             do
@@ -27,18 +22,21 @@ public class UserAccountEdit : BaseUserAccount
                 Console.Clear();
                 Console.WriteLine("Do you want to change the Username or Password");
                 var fieldToEdit = DisplayMenu.CreateMenu(new[] { "Username", "Password", "Exit" });
-                
+
                 switch (fieldToEdit)
                 {
                     case 1:
                         //ISSUE - WHEN UPDATING USERNAME, CHANGES SALT AND PASSWORD HASH
-                        usersInfo[selectedAccount-1] = ChangeUsername(path) + ',' + selectedUser[1];
-                        UpdateFile(usersInfo, path);
+                        usersInfo[selectedAccount - 1] = UserAccountEdit.ChangeUsername(path) + ',' + selectedUser[1] +
+                                                         ',' + selectedUser[2];
+                        BaseUserAccount.UpdateFile(usersInfo, path);
                         finishedEditing = true;
                         break;
                     case 2:
-                        usersInfo[selectedAccount - 1] = selectedUser[0] + ',' + ChangePassword(selectedUser[0], path);
-                        UpdateFile(usersInfo, path);
+                        usersInfo[selectedAccount - 1] = selectedUser[0] + ',' +
+                                                         UserAccountEdit.ChangePassword(selectedUser[0],
+                                                             int.Parse(selectedUser[2]), path) + ',' + selectedUser[2];
+                        BaseUserAccount.UpdateFile(usersInfo, path);
                         finishedEditing = true;
                         break;
                     case 3:
@@ -50,7 +48,6 @@ public class UserAccountEdit : BaseUserAccount
                 }
             } while (finishedEditing == false);
         } while (true);
-
     }
 
     private static string ChangeUsername(string path)
@@ -75,7 +72,7 @@ public class UserAccountEdit : BaseUserAccount
         return newUsername;
     }
 
-    private static string ChangePassword(string userUsername, string path)
+    private static string ChangePassword(string userUsername, int salt, string path)
     {
         Console.Clear();
         string? newPassword;
@@ -94,7 +91,7 @@ public class UserAccountEdit : BaseUserAccount
                 continue;
             }
 
-            newPassword = BaseUserAccount.HashPassword(userUsername, newPassword);
+            newPassword = BaseUserAccount.HashPassword(userUsername, newPassword, salt);
 
             break;
         } while (true);

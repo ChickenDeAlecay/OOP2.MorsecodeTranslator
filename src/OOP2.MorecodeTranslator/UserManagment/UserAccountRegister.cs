@@ -1,5 +1,6 @@
 ﻿namespace Menu;
 
+using System.Security.Cryptography;
 using System.Text;
 
 public class UserAccountRegister : BaseUserAccount
@@ -9,13 +10,13 @@ public class UserAccountRegister : BaseUserAccount
         Console.Clear();
         do
         {
-            Console.Write("Enter the accounts Username :");
+            Console.Write("Enter the accounts Username: ");
             var userUsername = Console.ReadLine();
 
             Console.Write("Enter the accounts Password: ");
             var userPassword = BaseUserAccount.HidePassword();
 
-            Console.Write("\nRepeat the Password: ");
+            Console.Write("\nRepeat the Password        : ");
             var repeatedPassword = BaseUserAccount.HidePassword();
 
             if (userPassword != repeatedPassword)
@@ -32,16 +33,18 @@ public class UserAccountRegister : BaseUserAccount
                 continue;
             }
 
-            userPassword = BaseUserAccount.HashPassword(userUsername, userPassword);
-            UserAccountRegister.WriteUserToFile(userUsername, userPassword, path);
+            var rndNumSalt = RandomNumberGenerator.GetInt32(0, 10000);
+
+            userPassword = BaseUserAccount.HashPassword(userUsername, userPassword, rndNumSalt);
+            UserAccountRegister.WriteUserToFile(userUsername, userPassword, rndNumSalt, path);
 
             break;
         } while (true);
     }
 
-    private static void WriteUserToFile(string userUsername, string userPassword, string path)
+    private static void WriteUserToFile(string userUsername, string userPassword, int rndNumSalt, string path)
     {
-        var newUser = new List<string> { userUsername + ',' + userPassword };
+        var newUser = new List<string> { userUsername + ',' + userPassword + ',' + rndNumSalt };
 
         File.AppendAllLines(path, newUser, Encoding.UTF8);
     }

@@ -46,8 +46,11 @@ public static class Program
         {
             Console.Clear();
 
-            var menuOption = DisplayMenu.CreateMenu(new[] 
-                { "Create New User", "Change User Details", "Delete User", "Create New Admin", "Change Admin Details", "Delete Admin", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[]
+            {
+                "Create New User", "Change User Details", "Delete User", "Create New Admin", "Change Admin Details",
+                "Delete Admin", "Exit"
+            });
 
             switch (menuOption)
             {
@@ -82,6 +85,7 @@ public static class Program
             }
         } while (exit == false);
     }
+
     private static void SelectMode()
     {
         bool exit;
