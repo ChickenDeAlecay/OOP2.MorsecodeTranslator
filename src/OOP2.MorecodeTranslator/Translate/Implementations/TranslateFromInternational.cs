@@ -11,6 +11,11 @@ public class TranslateFromInternational : ITranslate
     }
     public string TranslationSetPath => "Translation Sets\\international.txt";
     public string[,] TranslationTable { get; set; }
+    public void GetUserInput(string userName)
+    {
+        throw new NotImplementedException();
+    }
+
     public void GetUserInput()
     {
         throw new NotImplementedException();

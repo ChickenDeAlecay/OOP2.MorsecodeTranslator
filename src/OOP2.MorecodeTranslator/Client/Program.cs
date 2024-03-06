@@ -5,6 +5,7 @@ using Train.Contracts;
 using Train.Implementations;
 using Translate.Contracts;
 using Translate.Implementations;
+using User;
 
 //TEST
 
@@ -19,14 +20,18 @@ public static class Program
 
             var menuOption = DisplayMenu.CreateMenu(new[] { "User Login", "Admin Login", "Close Program" });
 
+            User user;
+
             switch (menuOption)
             {
                 case 1:
-                    if (UserAccountLogin.LoginUser("Users\\Logins.csv")) Program.SelectMode();
+                    user = UserAccountLogin.LoginUser("Users\\Logins.csv");
+                    if (user.Created) Program.SelectMode(user);
                     exit = false;
                     break;
                 case 2:
-                    if (UserAccountLogin.LoginUser("Users\\Admin.csv")) Program.AdminManagement();
+                    user = UserAccountLogin.LoginUser("Users\\Admin.csv");
+                    if (user.Created) Program.AdminManagement();
                     exit = false;
                     break;
                 case 3:
@@ -89,7 +94,7 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void SelectMode()
+    private static void SelectMode(User user)
     {
         bool exit;
         do
@@ -101,7 +106,7 @@ public static class Program
             switch (menuOption)
             {
                 case 1:
-                    Program.Translate();
+                    Program.Translate(user);
                     exit = false;
                     break;
                 case 2:
@@ -118,7 +123,7 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void Translate()
+    private static void Translate(User user)
     {
         bool exit;
         do
@@ -128,15 +133,15 @@ public static class Program
             ITranslate translate;
 
             switch (menuOption)
-            {
+            {   
                 case 1:
                     translate = new TranslateToInternational();
-                    translate.GetUserInput();
+                    translate.GetUserInput(user.Name);
                     exit = false;
                     break;
                 case 2:
                     translate = new TranslateToAmerican();
-                    translate.GetUserInput();
+                    translate.GetUserInput(user.Name);
                     exit = false;
                     break;
                 case 3:

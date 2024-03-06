@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Menu\Menu.csproj" />
     <ProjectReference Include="..\Resources\Resources.csproj" />
+    <ProjectReference Include="..\User\User.csproj" />
   </ItemGroup>
 
 </Project>

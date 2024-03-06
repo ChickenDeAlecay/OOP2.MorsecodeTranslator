@@ -1,5 +1,6 @@
 ﻿namespace Translate.Implementations;
 
+using Logger;
 using Resources;
 using Translate.Contracts;
 
@@ -14,7 +15,7 @@ public class TranslateToInternational : ITranslate
 
     public string[,] TranslationTable { get; set; }
 
-    public void GetUserInput()
+    public void GetUserInput(string userName)
     {
         var usersString = string.Empty;
         ConsoleKey key;
@@ -44,6 +45,9 @@ public class TranslateToInternational : ITranslate
         var translatedMessage = TranslateToMorsecode(usersString.ToUpper());
 
         Console.WriteLine("\n" + translatedMessage);
+
+        CreateLog.Log(userName,translatedMessage);
+
         Console.ReadKey();
     }
 

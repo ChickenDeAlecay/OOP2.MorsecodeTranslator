@@ -37,7 +37,7 @@ public class UserAccountRegister : BaseUserAccount
 
             userPassword = BaseUserAccount.HashPassword(userUsername, userPassword, rndNumSalt);
             UserAccountRegister.WriteUserToFile(userUsername, userPassword, rndNumSalt, path);
-
+            Directory.CreateDirectory($"Logs\\{userUsername}");
             break;
         } while (true);
     }

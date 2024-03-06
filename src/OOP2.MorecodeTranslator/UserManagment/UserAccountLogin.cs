@@ -1,8 +1,10 @@
 ﻿namespace Menu;
 
+using User;
+
 public class UserAccountLogin : BaseUserAccount
 {
-    public static bool LoginUser(string path)
+    public static User LoginUser(string path)
     {
         Console.Clear();
         do
@@ -27,7 +29,7 @@ public class UserAccountLogin : BaseUserAccount
                 continue;
             }
 
-            return true;
+            return new User(userUsername);
 
         } while (true);
     }
