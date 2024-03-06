@@ -48,8 +48,9 @@ public static class Program
 
             var menuOption = DisplayMenu.CreateMenu(new[]
             {
-                "Create New User", "Change User Details", "Delete User", "Create New Admin", "Change Admin Details",
-                "Delete Admin", "Exit"
+                "Create New User", "Change User Details", "Delete User Account", "Create New Admin",
+                "Change Admin Details",
+                "Delete Admin Account", "Exit"
             });
 
             switch (menuOption)
@@ -63,7 +64,8 @@ public static class Program
                     exit = false;
                     break;
                 case 3:
-                    exit = true;
+                    UserAccountDelete.DeleteUser("Users\\Logins.csv");
+                    exit = false;
                     break;
                 case 4:
                     UserAccountRegister.RegisterUser("Users\\Admin.csv");
@@ -74,6 +76,7 @@ public static class Program
                     exit = false;
                     break;
                 case 6:
+                    UserAccountDelete.DeleteUser("Users\\Admin.csv");
                     exit = false;
                     break;
                 case 7:

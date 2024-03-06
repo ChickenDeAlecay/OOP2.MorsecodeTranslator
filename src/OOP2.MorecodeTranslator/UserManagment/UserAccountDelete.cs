@@ -1,6 +1,6 @@
-﻿using Resources;
+﻿namespace Menu;
 
-namespace Menu;
+using Resources;
 
 public class UserAccountDelete : BaseUserAccount
 {
@@ -10,16 +10,34 @@ public class UserAccountDelete : BaseUserAccount
         {
             var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
-            var selectedAccount = DisplayAllAccounts(usersInfo);
+            var selectedAccount = BaseUserAccount.DisplayAllAccounts(usersInfo);
 
-            if (selectedAccount == usersInfo.Count / 2 + 1)
-            {
-                break;
-            }
+            if (selectedAccount == usersInfo.Count + 1) break;
 
-            
+            if (selectedAccount > usersInfo.Count + 1) continue;
 
+            UserAccountDelete.RemoveUser(selectedAccount, path);
         } while (true);
+    }
 
+    private static void RemoveUser(int selectedAccount, string path)
+    {
+        var accountFile = ReadUsersFile.GetUsersInfo(path);
+
+        Console.WriteLine($"You are about to delete {accountFile[selectedAccount - 1].Split(',')[0]}");
+        Console.WriteLine("Do you want to Continue?\n1. Yes\n2. No");
+        var confirmation = Console.ReadLine();
+        if (confirmation == "1")
+        {
+            accountFile.RemoveAt(selectedAccount - 1);
+
+            BaseUserAccount.UpdateFile(accountFile, path);
+        }
+        else if (confirmation == "2") { }
+        else
+        {
+            Console.WriteLine("Invalid Input\nPress any key to try again");
+            Console.ReadKey(true);
+        }
     }
 }
