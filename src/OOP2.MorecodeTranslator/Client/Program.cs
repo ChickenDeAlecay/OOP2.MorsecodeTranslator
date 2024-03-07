@@ -18,7 +18,7 @@ public static class Program
         {
             Console.Clear();
 
-            var menuOption = DisplayMenu.CreateMenu(new[] { "User Login", "Admin Login", "Close Program" });
+            var menuOption = DisplayMenu.CreateMenu(new[] { "User Login", "Admin Login" });
 
             User user;
 
@@ -31,7 +31,7 @@ public static class Program
                     break;
                 case 2:
                     user = UserAccountLogin.LoginUser("Users\\Admin.csv");
-                    if (user.Created) Program.AdminManagement();
+                    if (user.Created) Program.AdminManagement(user);
                     exit = false;
                     break;
                 case 3:
@@ -44,7 +44,7 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void AdminManagement()
+    private static void AdminManagement(User user)
     {
         bool exit;
         do
@@ -55,33 +55,33 @@ public static class Program
             {
                 "Create New User", "Change User Details", "Delete User Account", "Create New Admin",
                 "Change Admin Details",
-                "Delete Admin Account", "Exit"
+                "Delete Admin Account"
             });
 
             switch (menuOption)
             {
                 case 1:
-                    UserAccountRegister.RegisterUser("Users\\Logins.csv");
+                    UserAccountRegister.RegisterUser("Users\\Logins.csv", user.Name);
                     exit = false;
                     break;
                 case 2:
-                    UserAccountEdit.EditUser("Users\\Logins.csv");
+                    UserAccountEdit.EditUser("Users\\Logins.csv", user.Name);
                     exit = false;
                     break;
                 case 3:
-                    UserAccountDelete.DeleteUser("Users\\Logins.csv");
+                    UserAccountDelete.DeleteUser("Users\\Logins.csv", user.Name);
                     exit = false;
                     break;
                 case 4:
-                    UserAccountRegister.RegisterUser("Users\\Admin.csv");
+                    UserAccountRegister.RegisterUser("Users\\Admin.csv", user.Name);
                     exit = false;
                     break;
                 case 5:
-                    UserAccountEdit.EditUser("Users\\Admin.csv");
+                    UserAccountEdit.EditUser("Users\\Admin.csv", user.Name);
                     exit = false;
                     break;
                 case 6:
-                    UserAccountDelete.DeleteUser("Users\\Admin.csv");
+                    UserAccountDelete.DeleteUser("Users\\Admin.csv", user.Name);
                     exit = false;
                     break;
                 case 7:
@@ -101,7 +101,7 @@ public static class Program
         {
             Console.Clear();
 
-            var menuOption = DisplayMenu.CreateMenu(new[] { "Translate", "Train", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[] { "Translate", "Train" });
 
             switch (menuOption)
             {
@@ -110,7 +110,7 @@ public static class Program
                     exit = false;
                     break;
                 case 2:
-                    Program.Train();
+                    Program.Train(user);
                     exit = false;
                     break;
                 case 3:
@@ -129,11 +129,14 @@ public static class Program
         do
         {
             Console.Clear();
-            var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[]
+            {
+                "Text to International", "Text to American", "Morsecode to International", "Morsecode to American"
+            });
             ITranslate translate;
 
             switch (menuOption)
-            {   
+            {
                 case 1:
                     translate = new TranslateToInternational();
                     translate.GetUserInput(user.Name);
@@ -145,6 +148,16 @@ public static class Program
                     exit = false;
                     break;
                 case 3:
+                    translate = new TranslateFromInternational();
+                    translate.GetUserInput(user.Name);
+                    exit = false;
+                    break;
+                case 4:
+                    translate = new TranslateFromAmerican();
+                    translate.GetUserInput(user.Name);
+                    exit = false;
+                    break;
+                case 5:
                     exit = true;
                     break;
                 default:
@@ -154,25 +167,25 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void Train()
+    private static void Train(User user)
     {
         bool exit;
         do
         {
             Console.Clear();
-            var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American", "Exit" });
+            var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American" });
             ITrain training;
 
             switch (menuOption)
             {
                 case 1:
                     training = new TrainInternational();
-                    training.Train();
+                    training.Train(user.Name);
                     exit = false;
                     break;
                 case 2:
                     training = new TrainAmerican();
-                    training.Train();
+                    training.Train(user.Name);
                     exit = false;
                     break;
                 case 3:

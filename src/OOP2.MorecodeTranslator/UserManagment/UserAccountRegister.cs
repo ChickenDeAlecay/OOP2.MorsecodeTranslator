@@ -2,10 +2,11 @@
 
 using System.Security.Cryptography;
 using System.Text;
+using Logger;
 
 public class UserAccountRegister : BaseUserAccount
 {
-    public static void RegisterUser(string path)
+    public static void RegisterUser(string path, string name)
     {
         Console.Clear();
         do
@@ -38,6 +39,8 @@ public class UserAccountRegister : BaseUserAccount
             userPassword = BaseUserAccount.HashPassword(userUsername, userPassword, rndNumSalt);
             UserAccountRegister.WriteUserToFile(userUsername, userPassword, rndNumSalt, path);
             Directory.CreateDirectory($"Logs\\{userUsername}");
+            CreateLog.Log(name,
+                $"New user {userUsername} has been created.\nNew directory created at: Logs\\{userUsername}");
             break;
         } while (true);
     }

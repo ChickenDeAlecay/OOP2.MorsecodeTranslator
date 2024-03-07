@@ -1,5 +1,6 @@
 ﻿namespace Train.Implementations;
 
+using Logger;
 using Resources;
 using Train.Contracts;
 
@@ -15,7 +16,7 @@ public class TrainInternational : ITrain
     public string[,] TranslationTable { get; set; }
     public string[] TrainingResults { get; set; } = new string[15];
 
-    public void Train()
+    public void Train(string name)
     {
         Console.Clear();
         Console.WriteLine("Morsecode Training - International:\n");
@@ -41,6 +42,8 @@ public class TrainInternational : ITrain
 
         Console.Clear();
         foreach (var result in this.TrainingResults) Console.WriteLine(result);
+
+        CreateLog.Log(name, $"{this.TrainingResults}");
 
         Console.Write("Press any key to continue.");
         Console.ReadKey();

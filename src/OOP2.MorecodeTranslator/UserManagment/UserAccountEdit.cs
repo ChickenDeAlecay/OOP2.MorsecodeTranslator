@@ -1,10 +1,11 @@
 ﻿namespace Menu;
 
+using Logger;
 using Resources;
 
 public class UserAccountEdit : BaseUserAccount
 {
-    public static void EditUser(string path)
+    public static void EditUser(string path, string name)
     {
         do
         {
@@ -26,10 +27,12 @@ public class UserAccountEdit : BaseUserAccount
                 switch (fieldToEdit)
                 {
                     case 1:
-                        //ISSUE - WHEN UPDATING USERNAME, CHANGES SALT AND PASSWORD HASH
+                        var oldName = usersInfo[0];
                         usersInfo[selectedAccount - 1] = UserAccountEdit.ChangeUsername(path) + ',' + selectedUser[1] +
                                                          ',' + selectedUser[2];
                         BaseUserAccount.UpdateFile(usersInfo, path);
+                        CreateLog.Log(name,
+                            $"{name} has updated a user.\nUsers name updated to {usersInfo[0]} from {oldName}");
                         finishedEditing = true;
                         break;
                     case 2:
@@ -37,6 +40,7 @@ public class UserAccountEdit : BaseUserAccount
                                                          UserAccountEdit.ChangePassword(selectedUser[0],
                                                              int.Parse(selectedUser[2]), path) + ',' + selectedUser[2];
                         BaseUserAccount.UpdateFile(usersInfo, path);
+                        CreateLog.Log(name, $"{name} has updated a user.\n{usersInfo[0]}'s password has been updated");
                         finishedEditing = true;
                         break;
                     case 3:

@@ -32,7 +32,7 @@ public class TranslateToInternational : ITranslate
                 Console.Write("\b \b");
                 usersString = usersString.Remove(usersString.Length - 1, 1);
             }
-            else if (!CheckValidLetter(keyInfo.KeyChar, key))
+            else if (!this.CheckValidLetter(keyInfo.KeyChar, key))
             {
                 Console.Write("\b \b");
             }
@@ -42,11 +42,11 @@ public class TranslateToInternational : ITranslate
             }
         } while (key != ConsoleKey.Enter);
 
-        var translatedMessage = TranslateToMorsecode(usersString.ToUpper());
+        var translatedMessage = this.TranslateToMorsecode(usersString.ToUpper());
 
         Console.WriteLine("\n" + translatedMessage);
 
-        CreateLog.Log(userName,translatedMessage);
+        CreateLog.Log(userName, translatedMessage);
 
         Console.ReadKey();
     }
@@ -55,12 +55,8 @@ public class TranslateToInternational : ITranslate
     {
         if (key == ConsoleKey.Spacebar) return true;
         foreach (var letter in this.TranslationTable)
-        {
             if (keyInfo.ToString().ToUpper() == letter)
-            {
                 return true;
-            }
-        }
         return false;
     }
 
@@ -72,21 +68,15 @@ public class TranslateToInternational : ITranslate
         {
             var inputString = inputChar.ToString();
 
-            if (inputString == " ")
-            {
-                translatedMorsecode.Add("|");
-                continue;
-            }
+            if (inputString == " ") translatedMorsecode.Add("| ");
 
-            for (int i = 0; i < TranslationTable.Length / 2 - 1; i++)
-            {
+            for (var i = 0; i < this.TranslationTable.Length / 2 - 1; i++)
                 if (inputString == this.TranslationTable[i, 0])
                 {
                     translatedMorsecode.Add(this.TranslationTable[i, 1]);
                     translatedMorsecode.Add(" ");
                     break;
                 }
-            }
         }
 
         return string.Join("", translatedMorsecode);

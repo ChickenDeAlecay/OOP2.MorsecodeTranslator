@@ -8,5 +8,5 @@ public interface ITrain
 
     public string[] TrainingResults { get; set; }
 
-    public void Train();
+    public void Train(string name);
 }

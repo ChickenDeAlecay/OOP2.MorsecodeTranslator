@@ -1,5 +1,6 @@
 ﻿namespace Translate.Implementations;
 
+using Menu;
 using Resources;
 using Translate.Contracts;
 
@@ -9,15 +10,54 @@ public class TranslateFromInternational : ITranslate
     {
         this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
     }
+
     public string TranslationSetPath => "Translation Sets\\international.txt";
     public string[,] TranslationTable { get; set; }
+
     public void GetUserInput(string userName)
     {
-        throw new NotImplementedException();
+        do
+        {
+            Console.Clear();
+
+            var directories = Directory.GetDirectories("Logs");
+
+            var selectedDirectory = DisplayMenu.CreateMenu(directories);
+
+            if (selectedDirectory == directories.Length + 1) break;
+            if (selectedDirectory > directories.Length + 1) continue;
+
+            Console.Clear();
+
+            var files = Directory.GetFiles(directories[selectedDirectory - 1]);
+
+            var selectedFile = DisplayMenu.CreateMenu(files);
+
+            if (selectedFile == files.Length + 1) break;
+            if (selectedFile > files.Length + 1) continue;
+
+            var message = File.ReadAllText(files[selectedFile - 1]);
+
+            Console.WriteLine(this.TranslateFromMorsecode(message));
+        } while (true);
     }
 
-    public void GetUserInput()
+    private string TranslateFromMorsecode(string message)
     {
-        throw new NotImplementedException();
+        var messageArray = message.Split(' ');
+        var translatedMorsecode = string.Empty;
+        foreach (var morsecode in messageArray)
+        {
+            if (morsecode == "|") translatedMorsecode += " ";
+
+            for (var i = 0; i < this.TranslationTable.Length / 2 - 1; i++)
+                if (morsecode == this.TranslationTable[i, 1])
+                {
+                    translatedMorsecode += this.TranslationTable[i, 0];
+                    break;
+                }
+        }
+
+        return translatedMorsecode;
     }
 }

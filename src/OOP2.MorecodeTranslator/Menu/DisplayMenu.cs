@@ -11,6 +11,8 @@ public static class DisplayMenu
             iteration++;
         }
 
+        Console.WriteLine($"{iteration}. Exit");
+
         string? menuSelection;
         int menuSelectionInt;
         do
@@ -18,7 +20,7 @@ public static class DisplayMenu
             Console.Write("Enter Selection: ");
             menuSelection = Console.ReadLine();
         } while (!int.TryParse(menuSelection, out menuSelectionInt) || menuSelectionInt < 1 ||
-                 menuSelectionInt > menuOptions.Length);
+                 menuSelectionInt > menuOptions.Length + 1);
 
         return menuSelectionInt;
     }
