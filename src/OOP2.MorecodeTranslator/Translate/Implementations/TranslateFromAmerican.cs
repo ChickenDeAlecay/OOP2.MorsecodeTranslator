@@ -1,5 +1,7 @@
 ﻿namespace Translate.Implementations;
 
+using System.Security.Cryptography;
+using Encryption;
 using Menu;
 using Resources;
 using Translate.Contracts;
@@ -27,14 +29,16 @@ public class TranslateFromAmerican : ITranslate
 
             Console.Clear();
 
-            var files = Directory.GetFiles("Logs\\" + selectedDirectory);
+            var files = Directory.GetFiles(directories[selectedDirectory - 1]);
 
-            var selectedFile = DisplayMenu.CreateMenu(directories);
+            var selectedFile = DisplayMenu.CreateMenu(files);
 
-            if (selectedFile == directories.Length + 1) break;
-            if (selectedFile > directories.Length + 1) continue;
+            if (selectedFile == files.Length + 1) break;
+            if (selectedFile > files.Length + 1) continue;
 
-            var message = File.ReadAllText($"{selectedDirectory}\\{selectedFile}.txt");
+            var message = File.ReadAllText(files[selectedFile - 1]);
+
+            message = Decrypt.DecryptMessage(message);
 
             Console.WriteLine(this.TranslateFromMorsecode(message));
         } while (true);

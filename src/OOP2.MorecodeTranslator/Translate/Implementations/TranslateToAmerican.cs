@@ -1,5 +1,6 @@
 ﻿namespace Translate.Implementations;
 
+using Encryption;
 using Logger;
 using Resources;
 using Translate.Contracts;
@@ -43,6 +44,10 @@ public class TranslateToAmerican : ITranslate
         } while (key != ConsoleKey.Enter);
 
         var translatedMessage = this.TranslateToMorsecode(usersString.ToUpper());
+
+        Console.WriteLine("\n" + translatedMessage);
+
+        translatedMessage = Decrypt.DecryptMessage(translatedMessage);
 
         Console.WriteLine("\n" + translatedMessage);
 

@@ -1,5 +1,6 @@
 ﻿namespace Translate.Implementations;
 
+using Encryption;
 using Menu;
 using Resources;
 using Translate.Contracts;
@@ -37,6 +38,8 @@ public class TranslateFromInternational : ITranslate
             if (selectedFile > files.Length + 1) continue;
 
             var message = File.ReadAllText(files[selectedFile - 1]);
+
+            message = Decrypt.DecryptMessage(message);
 
             Console.WriteLine(this.TranslateFromMorsecode(message));
         } while (true);
