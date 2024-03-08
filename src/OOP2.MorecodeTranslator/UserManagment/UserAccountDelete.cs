@@ -5,7 +5,7 @@ using Resources;
 
 public class UserAccountDelete : BaseUserAccount
 {
-    public static void DeleteUser(string path, string name)
+    public static void DeleteUser(string path, string? name)
     {
         do
         {

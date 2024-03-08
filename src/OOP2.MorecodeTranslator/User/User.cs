@@ -1,13 +1,8 @@
 ﻿namespace User;
 
-public class User
+public class User(string? name, bool created)
 {
-    public User(string name)
-    {
-        this.Name = name;
-        this.Created = true;
-    }
-    public string Name { get; set; }
+    public string? Name { get; set; } = name;
 
-    public bool Created { get; set; }
+    public bool Created { get; set; } = created;
 }

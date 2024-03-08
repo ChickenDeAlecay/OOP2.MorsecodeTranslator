@@ -5,7 +5,7 @@ using Resources;
 
 public class UserAccountEdit : BaseUserAccount
 {
-    public static void EditUser(string path, string name)
+    public static void EditUser(string path, string? name)
     {
         do
         {
@@ -15,7 +15,7 @@ public class UserAccountEdit : BaseUserAccount
 
             if (selectedAccount == usersInfo.Count + 1) break;
 
-            var selectedUser = usersInfo[selectedAccount - 1].Split(',');
+            string?[] selectedUser = usersInfo[selectedAccount - 1].Split(',');
 
             bool finishedEditing;
             do
@@ -37,8 +37,7 @@ public class UserAccountEdit : BaseUserAccount
                         break;
                     case 2:
                         usersInfo[selectedAccount - 1] = selectedUser[0] + ',' +
-                                                         UserAccountEdit.ChangePassword(selectedUser[0],
-                                                             int.Parse(selectedUser[2]), path) + ',' + selectedUser[2];
+                                                         UserAccountEdit.ChangePassword(int.Parse(selectedUser[2] ?? throw new InvalidOperationException())) + ',' + selectedUser[2];
                         BaseUserAccount.UpdateFile(usersInfo, path);
                         CreateLog.Log(name, $"{name} has updated a user.\n{usersInfo[0]}'s password has been updated");
                         finishedEditing = true;
@@ -73,10 +72,10 @@ public class UserAccountEdit : BaseUserAccount
             break;
         } while (true);
 
-        return newUsername;
+        return newUsername ?? throw new InvalidOperationException();
     }
 
-    private static string ChangePassword(string userUsername, int salt, string path)
+    private static string ChangePassword(int salt)
     {
         Console.Clear();
         string? newPassword;
@@ -95,7 +94,7 @@ public class UserAccountEdit : BaseUserAccount
                 continue;
             }
 
-            newPassword = BaseUserAccount.HashPassword(userUsername, newPassword, salt);
+            newPassword = BaseUserAccount.HashPassword(newPassword, salt);
 
             break;
         } while (true);

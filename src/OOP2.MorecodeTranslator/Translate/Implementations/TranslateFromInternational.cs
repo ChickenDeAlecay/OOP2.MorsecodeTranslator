@@ -15,7 +15,7 @@ public class TranslateFromInternational : ITranslate
     public string TranslationSetPath => "Translation Sets\\international.txt";
     public string[,] TranslationTable { get; set; }
 
-    public void GetUserInput(string userName)
+    public void GetUserInput(string? userName)
     {
         do
         {

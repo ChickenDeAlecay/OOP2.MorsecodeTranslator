@@ -31,8 +31,7 @@ public abstract class BaseUserAccount
         return userPassword;
     }
 
-
-    internal static bool CheckUserExists(string userUsername, string path)
+    internal static bool CheckUserExists(string? userUsername, string path)
     {
         var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
@@ -49,7 +48,7 @@ public abstract class BaseUserAccount
         return false;
     }
 
-    internal static bool VerifyPassword(string userUsername, string userPassword, string path)
+    internal static bool VerifyPassword(string? userUsername, string userPassword, string path)
     {
         var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
@@ -73,14 +72,13 @@ public abstract class BaseUserAccount
             }
         }
 
-        var hashToCompare = BaseUserAccount.HashPassword(userUsername, userPassword, salt);
+        var hashToCompare = BaseUserAccount.HashPassword(userPassword, salt);
 
         return string.Equals(hashToCompare, hash);
     }
 
-
     //from: https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-8.0
-    internal static string HashPassword(string userUsername, string userPassword, int rndNumSalt)
+    internal static string HashPassword(string userPassword, int rndNumSalt)
     {
         // Generate a 128-bit salt using a sequence of
         // cryptographically strong random bytes.

@@ -1,6 +1,7 @@
 ﻿namespace Client;
 
 using Menu;
+using Resources;
 using Train.Contracts;
 using Train.Implementations;
 using Translate.Contracts;
@@ -13,6 +14,8 @@ public static class Program
 {
     private static void Main(string[] args)
     {
+        Program.InitiateProgram();
+
         bool exit;
         do
         {
@@ -196,5 +199,30 @@ public static class Program
                     break;
             }
         } while (exit == false);
+    }
+
+    private static void InitiateProgram()
+    {
+        if (Directory.Exists("Users") == false)
+        {
+            Directory.CreateDirectory("Users");
+            File.Create("Users\\Logins.csv");
+            File.Create("User\\Admin.csv");
+
+            Console.WriteLine("No Admin Accounts found\nPress any key to continue to create acount");
+            UserAccountRegister.RegisterUser("Users\\Admin.csv", "");
+        }
+
+        if (Directory.Exists("Logs") == false)
+        {
+            Directory.CreateDirectory("Logs");
+        }
+
+        if (Directory.Exists("Translation Sets") == false)
+        {
+            string translationsetPath = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory())!.Parent!.Parent!.Parent!.FullName, "Resources\\Translation Sets");
+            File.Copy(translationsetPath + "american.txt", "Translation Sets\\american.txt");
+            File.Copy(translationsetPath + "international.txt", "Translation Sets\\international.txt");
+        }
     }
 }

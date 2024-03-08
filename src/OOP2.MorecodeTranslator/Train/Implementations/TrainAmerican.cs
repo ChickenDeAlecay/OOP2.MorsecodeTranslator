@@ -17,7 +17,7 @@ public class TrainAmerican : ITrain
     public string[] TrainingResults { get; set; } = new string[15];
 
 
-    public void Train(string name)
+    public void Train(string? name)
     {
         Console.Clear();
         Console.WriteLine("Morsecode Training - American:\n");

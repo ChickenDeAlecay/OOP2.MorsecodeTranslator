@@ -16,7 +16,7 @@ public class TranslateToInternational : ITranslate
 
     public string[,] TranslationTable { get; set; }
 
-    public void GetUserInput(string userName)
+    public void GetUserInput(string? userName)
     {
         var usersString = string.Empty;
         ConsoleKey key;
@@ -60,7 +60,7 @@ public class TranslateToInternational : ITranslate
     {
         if (key == ConsoleKey.Spacebar) return true;
         foreach (var letter in this.TranslationTable)
-            if (keyInfo.ToString().ToUpper() == letter)
+            if (string.Equals(keyInfo.ToString().ToUpper(),letter))
                 return true;
         return false;
     }

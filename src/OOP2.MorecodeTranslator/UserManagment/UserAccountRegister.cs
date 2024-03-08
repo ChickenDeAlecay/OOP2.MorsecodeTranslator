@@ -6,7 +6,7 @@ using Logger;
 
 public class UserAccountRegister : BaseUserAccount
 {
-    public static void RegisterUser(string path, string name)
+    public static void RegisterUser(string path, string? name)
     {
         Console.Clear();
         do
@@ -36,7 +36,7 @@ public class UserAccountRegister : BaseUserAccount
 
             var rndNumSalt = RandomNumberGenerator.GetInt32(0, 10000);
 
-            userPassword = BaseUserAccount.HashPassword(userUsername, userPassword, rndNumSalt);
+            userPassword = BaseUserAccount.HashPassword(userPassword, rndNumSalt);
             UserAccountRegister.WriteUserToFile(userUsername, userPassword, rndNumSalt, path);
             Directory.CreateDirectory($"Logs\\{userUsername}");
             CreateLog.Log(name,
@@ -45,7 +45,7 @@ public class UserAccountRegister : BaseUserAccount
         } while (true);
     }
 
-    private static void WriteUserToFile(string userUsername, string userPassword, int rndNumSalt, string path)
+    private static void WriteUserToFile(string? userUsername, string userPassword, int rndNumSalt, string path)
     {
         var newUser = new List<string> { userUsername + ',' + userPassword + ',' + rndNumSalt };
 

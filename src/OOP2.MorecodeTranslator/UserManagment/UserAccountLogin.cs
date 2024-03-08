@@ -6,9 +6,10 @@ public class UserAccountLogin : BaseUserAccount
 {
     public static User LoginUser(string path)
     {
-        Console.Clear();
         do
         {
+            Console.Clear();
+
             Console.Write("Enter your username: ");
             var userUsername = Console.ReadLine();
 
@@ -19,6 +20,11 @@ public class UserAccountLogin : BaseUserAccount
             {
                 Console.Clear();
                 Console.WriteLine("Username not found");
+                Console.WriteLine("Do you want to try again?\n1. Yes\n2. No");
+                if (Console.ReadLine() == "2")
+                {
+                    break;
+                }
                 continue;
             }
 
@@ -26,11 +32,18 @@ public class UserAccountLogin : BaseUserAccount
             {
                 Console.Clear();
                 Console.WriteLine("Password incorrect");
+                Console.WriteLine("Do you want to try again?\n1. Yes\n2. No");
+                if (Console.ReadLine() == "2")
+                {
+                    break;
+                }
                 continue;
             }
 
-            return new User(userUsername);
+            return new User(userUsername, true);
 
         } while (true);
+
+        return new User("", false);
     }
 }
