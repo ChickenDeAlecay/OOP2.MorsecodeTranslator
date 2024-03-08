@@ -207,9 +207,11 @@ public static class Program
         {
             Directory.CreateDirectory("Users");
             File.Create("Users\\Logins.csv");
-            File.Create("User\\Admin.csv");
+            //File.Create("Users\\Admin.csv");
+            File.AppendAllLines("Users\\Admin.csv",new List<string>());
 
             Console.WriteLine("No Admin Accounts found\nPress any key to continue to create acount");
+            Console.ReadKey();
             UserAccountRegister.RegisterUser("Users\\Admin.csv", "");
         }
 
@@ -221,8 +223,9 @@ public static class Program
         if (Directory.Exists("Translation Sets") == false)
         {
             string translationsetPath = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory())!.Parent!.Parent!.Parent!.FullName, "Resources\\Translation Sets");
-            File.Copy(translationsetPath + "american.txt", "Translation Sets\\american.txt");
-            File.Copy(translationsetPath + "international.txt", "Translation Sets\\international.txt");
+            Directory.CreateDirectory("Translation Sets");
+            File.Copy(translationsetPath + "\\american.txt", "Translation Sets\\american.txt");
+            File.Copy(translationsetPath + "\\international.txt", "Translation Sets\\international.txt");
         }
     }
 }
