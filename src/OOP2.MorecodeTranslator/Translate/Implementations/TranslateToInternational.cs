@@ -25,7 +25,7 @@ public class TranslateToInternational : ITranslate
 
         do
         {
-            var keyInfo = Console.ReadKey(false);
+            var keyInfo = Console.ReadKey(true);
             key = keyInfo.Key;
 
             if (key == ConsoleKey.Backspace && usersString.Length > 0)
@@ -39,6 +39,7 @@ public class TranslateToInternational : ITranslate
             }
             else if (!char.IsControl(keyInfo.KeyChar))
             {
+                Console.Write(keyInfo.KeyChar);
                 usersString += keyInfo.KeyChar;
             }
         } while (key != ConsoleKey.Enter);

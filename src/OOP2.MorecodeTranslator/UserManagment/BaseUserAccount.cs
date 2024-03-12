@@ -35,10 +35,6 @@ public abstract class BaseUserAccount
     {
         var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
-        //for (var i = 0; i < usersInfo.Length / 2; i++)
-        //    if (usersInfo[i, 0] == userUsername)
-        //        return true;
-
         foreach (var user in usersInfo)
         {
             var userSplit = user.Split(',');
@@ -54,13 +50,6 @@ public abstract class BaseUserAccount
 
         var salt = 0;
         var hash = string.Empty;
-
-        //for (var i = 0; i < usersInfo.Length / 2; i++)
-        //    if (usersInfo[i, 0] == userUsername)
-        //    {
-        //        hash = usersInfo[i, 1];
-        //        salt = Encoding.ASCII.GetBytes(userUsername + userUsername.Length);
-        //    }
 
         foreach (var users in usersInfo)
         {
