@@ -99,6 +99,8 @@ public static class Program
 
     private static void SelectMode(User user)
     {
+        var translationSetAmerican = new ReadTranslationSet("Translation Sets\\american.txt");
+        var translationSetInternatioanl = new ReadTranslationSet("Translation Sets\\international.txt");
         bool exit;
         do
         {
@@ -109,11 +111,11 @@ public static class Program
             switch (menuOption)
             {
                 case 1:
-                    Program.Translate(user);
+                    Program.Translate(user, translationSetInternatioanl, translationSetAmerican);
                     exit = false;
                     break;
                 case 2:
-                    Program.Train(user);
+                    Program.Train(user, translationSetInternatioanl, translationSetAmerican);
                     exit = false;
                     break;
                 case 3:
@@ -126,7 +128,7 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void Translate(User user)
+    private static void Translate(User user, ReadTranslationSet translationSetInternatioanl, ReadTranslationSet translationSetAmerican)
     {
         bool exit;
         do
@@ -141,22 +143,22 @@ public static class Program
             switch (menuOption)
             {
                 case 1:
-                    translate = new TranslateToInternational();
+                    translate = new TranslateToInternational(translationSetInternatioanl);
                     translate.GetUserInput(user.Name);
                     exit = false;
                     break;
                 case 2:
-                    translate = new TranslateToAmerican();
+                    translate = new TranslateToAmerican(translationSetAmerican);
                     translate.GetUserInput(user.Name);
                     exit = false;
                     break;
                 case 3:
-                    translate = new TranslateFromInternational();
+                    translate = new TranslateFromInternational(translationSetInternatioanl);
                     translate.GetUserInput(user.Name);
                     exit = false;
                     break;
                 case 4:
-                    translate = new TranslateFromAmerican();
+                    translate = new TranslateFromAmerican(translationSetAmerican);
                     translate.GetUserInput(user.Name);
                     exit = false;
                     break;
@@ -170,7 +172,7 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void Train(User user)
+    private static void Train(User user, ReadTranslationSet translationSetInternatioanl, ReadTranslationSet translationSetAmerican)
     {
         bool exit;
         do
@@ -182,12 +184,12 @@ public static class Program
             switch (menuOption)
             {
                 case 1:
-                    training = new TrainInternational();
+                    training = new TrainInternational(translationSetInternatioanl);
                     training.Train(user.Name);
                     exit = false;
                     break;
                 case 2:
-                    training = new TrainAmerican();
+                    training = new TrainAmerican(translationSetAmerican);
                     training.Train(user.Name);
                     exit = false;
                     break;

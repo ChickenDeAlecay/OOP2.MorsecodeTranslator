@@ -7,13 +7,10 @@ using Translate.Contracts;
 
 public class TranslateToInternational : ITranslate
 {
-    public TranslateToInternational()
+    public TranslateToInternational(ReadTranslationSet translationSet)
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
+        this.TranslationTable = translationSet.TranslationSet;
     }
-
-    public string TranslationSetPath => "Translation Sets\\international.txt";
-
     public string[,] TranslationTable { get; set; }
 
     public void GetUserInput(string? userName)

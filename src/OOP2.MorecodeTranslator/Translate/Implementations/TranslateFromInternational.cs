@@ -7,9 +7,9 @@ using Translate.Contracts;
 
 public class TranslateFromInternational : ITranslate
 {
-    public TranslateFromInternational()
+    public TranslateFromInternational(ReadTranslationSet translationSet)
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
+        this.TranslationTable = translationSet.TranslationSet;
     }
 
     public string TranslationSetPath => "Translation Sets\\international.txt";

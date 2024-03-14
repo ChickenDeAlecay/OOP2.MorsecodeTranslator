@@ -6,9 +6,9 @@ using Train.Contracts;
 
 public class TrainInternational : ITrain
 {
-    public TrainInternational()
+    public TrainInternational(ReadTranslationSet translationSet)
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
+        this.TranslationTable = translationSet.TranslationSet;
     }
 
     public string TranslationSetPath => "Translation Sets\\international.txt";

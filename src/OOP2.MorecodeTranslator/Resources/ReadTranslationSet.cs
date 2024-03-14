@@ -1,8 +1,13 @@
 ﻿namespace Resources;
 
-public static class ReadTranslationSet
+public class ReadTranslationSet
 {
-    public static string[,] GetTranslationSet(string filePath)
+    public ReadTranslationSet(string filePath)
+    {
+        this.TranslationSet = GetTranslationSet(filePath);
+    }
+    public string[,] TranslationSet { get; set; }
+    public string[,] GetTranslationSet(string filePath)
     {
         var translationSet = new string[35, 2];
 

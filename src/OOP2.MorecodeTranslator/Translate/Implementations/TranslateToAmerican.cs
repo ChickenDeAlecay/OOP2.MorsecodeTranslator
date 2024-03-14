@@ -7,9 +7,9 @@ using Translate.Contracts;
 
 public class TranslateToAmerican : ITranslate
 {
-    public TranslateToAmerican()
+    public TranslateToAmerican(ReadTranslationSet translationSet)
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
+        this.TranslationTable = translationSet.TranslationSet;
     }
 
     public string TranslationSetPath => "Translation Sets\\american.txt";
