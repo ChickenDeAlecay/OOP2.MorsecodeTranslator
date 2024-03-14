@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Encoding", "Encoding", "{68
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compression", "Compression", "{CEF0B0C7-1211-4B36-AFCF-F92EB64F1029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encoding", "Encoding\Encoding.csproj", "{3DCDBB75-EDF5-4022-AB7D-B09FB046C987}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AEncoding", "Encoding\AEncoding.csproj", "{3DCDBB75-EDF5-4022-AB7D-B09FB046C987}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

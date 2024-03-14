@@ -1,5 +1,6 @@
 ﻿namespace Translate.Implementations;
 
+using AEncoding;
 using Encryption;
 using Logger;
 using Resources;
@@ -11,6 +12,7 @@ public class TranslateToInternational : ITranslate
     {
         this.TranslationTable = translationSet.TranslationSet;
     }
+
     public string[,] TranslationTable { get; set; }
 
     public void GetUserInput(string? userName)
@@ -40,15 +42,25 @@ public class TranslateToInternational : ITranslate
             }
         } while (key != ConsoleKey.Enter);
 
-        var translatedMessage = this.TranslateToMorsecode(usersString.ToUpper());
+        var characterSet = string.Empty;
 
-        Console.WriteLine("\n" + translatedMessage);
+        for (var i = 0; i < this.TranslationTable.Length / 2; i++) characterSet += this.TranslationTable[i, 0];
 
-        translatedMessage = Decrypt.DecryptMessage(translatedMessage);
+        var aesKey = Console.ReadLine();
 
-        Console.WriteLine("\n" + translatedMessage);
+        var message = Encrypt.EncryptMessage(usersString.ToUpper(), aesKey);
 
-        CreateLog.Log(userName, translatedMessage);
+        Console.WriteLine("\n" + message);
+
+        message = EncodeMessage.Encode(message, characterSet);
+
+        Console.WriteLine("\n" + message);
+
+        message = this.TranslateToMorsecode(message);
+
+        Console.WriteLine("\n" + message);
+
+        CreateLog.Log(userName, message);
 
         Console.ReadKey();
     }
@@ -57,7 +69,7 @@ public class TranslateToInternational : ITranslate
     {
         if (key == ConsoleKey.Spacebar) return true;
         foreach (var letter in this.TranslationTable)
-            if (string.Equals(keyInfo.ToString().ToUpper(),letter))
+            if (string.Equals(keyInfo.ToString().ToUpper(), letter))
                 return true;
         return false;
     }

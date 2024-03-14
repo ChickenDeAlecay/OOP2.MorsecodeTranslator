@@ -8,8 +8,6 @@ using Translate.Contracts;
 using Translate.Implementations;
 using User;
 
-//TEST
-
 public static class Program
 {
     private static void Main(string[] args)

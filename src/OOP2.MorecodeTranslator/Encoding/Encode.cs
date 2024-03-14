@@ -1,7 +1,31 @@
-﻿namespace Encoding
+﻿namespace AEncoding
 {
-    internal static class EncodeMessage
+    public static class EncodeMessage
     {
+        public static string Encode(string message, string chars)
+        {
+            message = EncodeMessage.ConvertToInt(message);
+
+            var encodedMessage = string.Empty;
+            var origionalMessage = message.Split(" ");
+
+            var intMessage = new List<long>();
+            foreach (var s in origionalMessage) intMessage.Add(long.Parse(s));
+
+            foreach (var i in intMessage)
+            {
+                var messageInt = i;
+                while (messageInt != 0)
+                {
+                    encodedMessage += chars[(int)(messageInt % 36)];
+                    messageInt /= 36;
+                }
+
+                encodedMessage += " ";
+            }
+
+            return encodedMessage.Trim();
+        }
         private static string ConvertToInt(string message)
         {
             message.ToCharArray();
@@ -27,31 +51,6 @@
             intList += intWord + " " + intCharLength;
 
             return intList.Trim();
-        }
-
-        public static string Encode(string message, string chars)
-        {
-            message = EncodeMessage.ConvertToInt(message);
-
-            var encodedMessage = string.Empty;
-            var origionalMessage = message.Split(" ");
-
-            var intMessage = new List<long>();
-            foreach (var s in origionalMessage) intMessage.Add(long.Parse(s));
-
-            foreach (var i in intMessage)
-            {
-                var messageInt = i;
-                while (messageInt != 0)
-                {
-                    encodedMessage += chars[(int)(messageInt % 36)];
-                    messageInt /= 36;
-                }
-
-                encodedMessage += " ";
-            }
-
-            return encodedMessage.Trim();
         }
     }
 }

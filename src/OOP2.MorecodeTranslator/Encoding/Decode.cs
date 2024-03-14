@@ -1,8 +1,6 @@
-﻿namespace Encoding;
+﻿namespace AEncoding;
 
-public class Decode
-{
-    internal static class DecodeMessage
+    public static class DecodeMessage
     {
         public static string Decode(string message, string chars)
         {
@@ -56,4 +54,3 @@ public class Decode
             return unEncodedMessage.Trim();
         }
     }
-}
