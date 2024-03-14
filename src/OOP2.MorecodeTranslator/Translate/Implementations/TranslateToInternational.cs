@@ -22,25 +22,27 @@ public class TranslateToInternational : ITranslate
 
         Console.WriteLine("Enter the string you would like to translate to morsecode");
 
-        do
-        {
-            var keyInfo = Console.ReadKey(false);
-            key = keyInfo.Key;
+        //do
+        //{
+        //    var keyInfo = Console.ReadKey(false);
+        //    key = keyInfo.Key;
 
-            if (key == ConsoleKey.Backspace && usersString.Length > 0)
-            {
-                Console.Write("\b \b");
-                usersString = usersString.Remove(usersString.Length - 1, 1);
-            }
-            else if (!this.CheckValidLetter(keyInfo.KeyChar, key))
-            {
-                Console.Write("\b \b");
-            }
-            else if (!char.IsControl(keyInfo.KeyChar))
-            {
-                usersString += keyInfo.KeyChar;
-            }
-        } while (key != ConsoleKey.Enter);
+        //    if (key == ConsoleKey.Backspace && usersString.Length > 0)
+        //    {
+        //        Console.Write("\b \b");
+        //        usersString = usersString.Remove(usersString.Length - 1, 1);
+        //    }
+        //    else if (!this.CheckValidLetter(keyInfo.KeyChar, key))
+        //    {
+        //        Console.Write("\b \b");
+        //    }
+        //    else if (!char.IsControl(keyInfo.KeyChar))
+        //    {
+        //        usersString += keyInfo.KeyChar;
+        //    }
+        //} while (key != ConsoleKey.Enter);
+
+        usersString = Console.ReadLine();
 
         var characterSet = string.Empty;
 

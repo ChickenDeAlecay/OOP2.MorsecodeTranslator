@@ -1,7 +1,6 @@
-﻿using System.Security.Cryptography;
-using System.Text;
+﻿namespace Encryption;
 
-namespace Encryption;
+using System.Security.Cryptography;
 
 public static class Encrypt
 {
@@ -14,31 +13,27 @@ public static class Encrypt
             throw new ArgumentNullException("key");
         string encrypted;
 
+        // Derive a new password using the PBKDF2 algorithm and a random salt
+        var passwordBytes = new Rfc2898DeriveBytes(key, 20);
+
         // Create an Aes object
         // with the specified key and IV.
-        using (Aes aesAlg = Aes.Create())
+        using var aesAlg = Aes.Create();
+        aesAlg.Key = passwordBytes.GetBytes(32);
+
+        // Create an encryptor to perform the stream transform.
+        var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+        // Create the streams used for encryption.
+        using var msEncrypt = new MemoryStream();
+        using var cswEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
+        using (var swEncrypt = new StreamWriter(cswEncrypt))
         {
-            aesAlg.Key = Encoding.ASCII.GetBytes(key);
-
-            // Create an encryptor to perform the stream transform.
-            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-            // Create the streams used for encryption.
-            using (MemoryStream msEncrypt = new MemoryStream())
-            {
-                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                {
-                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                    {
-                        //Write all data to the stream.
-                        swEncrypt.Write(message);
-                    }
-                    encrypted = msEncrypt.ToString();
-                }
-            }
+            //Write all data to the stream.
+            swEncrypt.Write(message);
         }
 
         // Return the encrypted bytes from the memory stream.
-        return encrypted;
+        return encrypted = "";
     }
 }
