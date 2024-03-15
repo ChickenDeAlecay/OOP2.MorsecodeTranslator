@@ -33,7 +33,11 @@ public static class Encrypt
             swEncrypt.Write(message);
         }
 
+        encrypted = Convert.ToBase64String(msEncrypt.ToArray());
+
+
+
         // Return the encrypted bytes from the memory stream.
-        return encrypted = "";
+        return encrypted;
     }
 }

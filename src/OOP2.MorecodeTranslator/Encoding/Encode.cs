@@ -1,5 +1,7 @@
 ﻿namespace AEncoding
 {
+    using System.Numerics;
+
     public static class EncodeMessage
     {
         public static string Encode(string message, string chars)
@@ -7,10 +9,10 @@
             message = EncodeMessage.ConvertToInt(message);
 
             var encodedMessage = string.Empty;
-            var origionalMessage = message.Split(" ");
+            var originalMessage = message.Split(" ");
 
-            var intMessage = new List<long>();
-            foreach (var s in origionalMessage) intMessage.Add(long.Parse(s));
+            List<BigInteger> intMessage = new List<BigInteger>();
+            foreach (var s in originalMessage) intMessage.Add(BigInteger.Parse(s));
 
             foreach (var i in intMessage)
             {
