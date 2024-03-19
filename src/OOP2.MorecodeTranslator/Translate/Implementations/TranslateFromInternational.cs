@@ -1,5 +1,6 @@
 ﻿namespace Translate.Implementations;
 
+using AEncoding;
 using Encryption;
 using Menu;
 using Resources;
@@ -7,9 +8,9 @@ using Translate.Contracts;
 
 public class TranslateFromInternational : ITranslate
 {
-    public TranslateFromInternational()
+    public TranslateFromInternational(ReadTranslationSet translationSet)
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
+        this.TranslationTable = translationSet.TranslationSet;
     }
 
     public string TranslationSetPath => "Translation Sets\\international.txt";
@@ -37,11 +38,24 @@ public class TranslateFromInternational : ITranslate
             if (selectedFile == files.Length + 1) break;
             if (selectedFile > files.Length + 1) continue;
 
+            var characterSet = string.Empty;
+
+            for (int i = 0; i < TranslationTable.Length / 2; i++)
+            {
+                characterSet += TranslationTable[i, 0];
+            }
+
             var message = File.ReadAllText(files[selectedFile - 1]);
 
-            message = Decrypt.DecryptMessage(message);
+            message = TranslateFromMorsecode(message);
 
-            Console.WriteLine(this.TranslateFromMorsecode(message));
+            message = DecodeMessage.Decode(message, characterSet);
+
+            var aesKey = Console.ReadLine();
+
+            message = Decrypt.DecryptMessage(message, aesKey);
+
+            Console.WriteLine(message);
         } while (true);
     }
 

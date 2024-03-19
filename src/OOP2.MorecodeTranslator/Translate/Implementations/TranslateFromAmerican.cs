@@ -1,6 +1,7 @@
 ﻿namespace Translate.Implementations;
 
 using System.Security.Cryptography;
+using AEncoding;
 using Encryption;
 using Menu;
 using Resources;
@@ -8,9 +9,9 @@ using Translate.Contracts;
 
 public class TranslateFromAmerican : ITranslate
 {
-    public TranslateFromAmerican()
+    public TranslateFromAmerican(ReadTranslationSet translationSet)
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
+        this.TranslationTable = translationSet.TranslationSet;
     }
 
     public string TranslationSetPath => "Translation Sets\\american.txt";
@@ -36,26 +37,39 @@ public class TranslateFromAmerican : ITranslate
             if (selectedFile == files.Length + 1) break;
             if (selectedFile > files.Length + 1) continue;
 
+            var characterSet = string.Empty;
+
+            for (int i = 0; i < TranslationTable.Length / 2; i++)
+            {
+                characterSet += TranslationTable[i, 0];
+            }
+
             var message = File.ReadAllText(files[selectedFile - 1]);
 
-            message = Decrypt.DecryptMessage(message);
+            message = TranslateFromMorsecode(message);
 
-            Console.WriteLine(this.TranslateFromMorsecode(message));
+            message = DecodeMessage.Decode(message, characterSet);
+
+            var aesKey = Console.ReadLine();
+
+            message = Decrypt.DecryptMessage(message, aesKey);
+
+            Console.WriteLine(message);
         } while (true);
     }
 
-    private List<string?> TranslateFromMorsecode(string message)
+    private string TranslateFromMorsecode(string message)
     {
         var messageArray = message.Split(' ');
-        var translatedMorsecode = new List<string?>();
+        var translatedMorsecode = string.Empty;
         foreach (var morsecode in messageArray)
         {
-            if (morsecode == "| ") translatedMorsecode.Add(" ");
+            if (morsecode == "|") translatedMorsecode += " ";
 
             for (var i = 0; i < this.TranslationTable.Length / 2 - 1; i++)
                 if (morsecode == this.TranslationTable[i, 1])
                 {
-                    translatedMorsecode.Add(this.TranslationTable[i, 0]);
+                    translatedMorsecode += this.TranslationTable[i, 0];
                     break;
                 }
         }

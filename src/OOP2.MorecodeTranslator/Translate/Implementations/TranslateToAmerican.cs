@@ -1,15 +1,17 @@
 ﻿namespace Translate.Implementations;
 
+using System.Text;
 using Encryption;
 using Logger;
 using Resources;
 using Translate.Contracts;
+using AEncoding;
 
 public class TranslateToAmerican : ITranslate
 {
-    public TranslateToAmerican()
+    public TranslateToAmerican(ReadTranslationSet translationSet)
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
+        this.TranslationTable = translationSet.TranslationSet;
     }
 
     public string TranslationSetPath => "Translation Sets\\american.txt";
@@ -43,15 +45,24 @@ public class TranslateToAmerican : ITranslate
             }
         } while (key != ConsoleKey.Enter);
 
-        var translatedMessage = this.TranslateToMorsecode(usersString.ToUpper());
+        var characterSet = string.Empty;
 
-        Console.WriteLine("\n" + translatedMessage);
+        for (int i = 0; i < TranslationTable.Length/2; i++)
+        {
+            characterSet += TranslationTable[i,0];
+        }
 
-        translatedMessage = Decrypt.DecryptMessage(translatedMessage);
+        var aesKey = Console.ReadLine();
 
-        Console.WriteLine("\n" + translatedMessage);
+        var message = Encrypt.EncryptMessage(usersString.ToUpper(), aesKey);
 
-        CreateLog.Log(userName, translatedMessage);
+        Console.WriteLine("\n" + message);
+
+        message = EncodeMessage.Encode(message, characterSet);
+
+        message = this.TranslateToMorsecode(message);
+
+        CreateLog.Log(userName, message);
 
         Console.ReadKey();
     }

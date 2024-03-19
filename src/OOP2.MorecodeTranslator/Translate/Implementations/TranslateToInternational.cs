@@ -1,5 +1,6 @@
 ﻿namespace Translate.Implementations;
 
+using AEncoding;
 using Encryption;
 using Logger;
 using Resources;
@@ -7,12 +8,10 @@ using Translate.Contracts;
 
 public class TranslateToInternational : ITranslate
 {
-    public TranslateToInternational()
+    public TranslateToInternational(ReadTranslationSet translationSet)
     {
-        this.TranslationTable = ReadTranslationSet.GetTranslationSet(this.TranslationSetPath);
+        this.TranslationTable = translationSet.TranslationSet;
     }
-
-    public string TranslationSetPath => "Translation Sets\\international.txt";
 
     public string[,] TranslationTable { get; set; }
 
@@ -23,36 +22,47 @@ public class TranslateToInternational : ITranslate
 
         Console.WriteLine("Enter the string you would like to translate to morsecode");
 
-        do
-        {
-            var keyInfo = Console.ReadKey(true);
-            key = keyInfo.Key;
+        //do
+        //{
+        //    var keyInfo = Console.ReadKey(false);
+        //    key = keyInfo.Key;
 
-            if (key == ConsoleKey.Backspace && usersString.Length > 0)
-            {
-                Console.Write("\b \b");
-                usersString = usersString.Remove(usersString.Length - 1, 1);
-            }
-            else if (!this.CheckValidLetter(keyInfo.KeyChar, key))
-            {
-                Console.Write("\b \b");
-            }
-            else if (!char.IsControl(keyInfo.KeyChar))
-            {
-                Console.Write(keyInfo.KeyChar);
-                usersString += keyInfo.KeyChar;
-            }
-        } while (key != ConsoleKey.Enter);
+        //    if (key == ConsoleKey.Backspace && usersString.Length > 0)
+        //    {
+        //        Console.Write("\b \b");
+        //        usersString = usersString.Remove(usersString.Length - 1, 1);
+        //    }
+        //    else if (!this.CheckValidLetter(keyInfo.KeyChar, key))
+        //    {
+        //        Console.Write("\b \b");
+        //    }
+        //    else if (!char.IsControl(keyInfo.KeyChar))
+        //    {
+        //        usersString += keyInfo.KeyChar;
+        //    }
+        //} while (key != ConsoleKey.Enter);
 
-        var translatedMessage = this.TranslateToMorsecode(usersString.ToUpper());
+        usersString = Console.ReadLine();
 
-        Console.WriteLine("\n" + translatedMessage);
+        var characterSet = string.Empty;
 
-        translatedMessage = Decrypt.DecryptMessage(translatedMessage);
+        for (var i = 0; i < this.TranslationTable.Length / 2; i++) characterSet += this.TranslationTable[i, 0];
 
-        Console.WriteLine("\n" + translatedMessage);
+        var aesKey = Console.ReadLine();
 
-        CreateLog.Log(userName, translatedMessage);
+        var message = Encrypt.EncryptMessage(usersString.ToUpper(), aesKey);
+
+        Console.WriteLine("\n" + message);
+
+        message = EncodeMessage.Encode(message, characterSet);
+
+        Console.WriteLine("\n" + message);
+
+        message = this.TranslateToMorsecode(message);
+
+        Console.WriteLine("\n" + message);
+
+        CreateLog.Log(userName, message);
 
         Console.ReadKey();
     }
@@ -61,7 +71,7 @@ public class TranslateToInternational : ITranslate
     {
         if (key == ConsoleKey.Spacebar) return true;
         foreach (var letter in this.TranslationTable)
-            if (string.Equals(keyInfo.ToString().ToUpper(),letter))
+            if (string.Equals(keyInfo.ToString().ToUpper(), letter))
                 return true;
         return false;
     }
