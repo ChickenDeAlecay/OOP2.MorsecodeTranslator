@@ -1,12 +1,14 @@
 ﻿namespace AEncoding;
 
-    public static class DecodeMessage
+using System.Numerics;
+
+public static class DecodeMessage
     {
         public static string Decode(string message, string chars)
         {
             message = BackToString(message);
 
-            long tempMessage = 0;
+            BigInteger tempMessage = 0;
             var decodedMessage = string.Empty;
 
             var origionalMessage = message.Split(" ");
@@ -17,7 +19,7 @@
             foreach (var word in listMessage)
             {
                 for (var i = 0; i < word.Length; i++)
-                    tempMessage += chars.IndexOf(word[i]) * (long)Math.Pow(36, i);
+                    tempMessage += chars.IndexOf(word[i]) * (BigInteger)Math.Pow(36, i);
 
                 decodedMessage += tempMessage + " ";
                 tempMessage = 0;
@@ -31,8 +33,8 @@
             var unEncodedMessage = string.Empty;
             var origionalMessage = message.Split(" ");
 
-            var intMessage = new List<long>();
-            foreach (var s in origionalMessage) intMessage.Add(long.Parse(s));
+            var intMessage = new List<BigInteger>();
+            foreach (var s in origionalMessage) intMessage.Add(BigInteger.Parse(s));
 
             for (var i = 0; i < intMessage.Count; i += 2)
             {

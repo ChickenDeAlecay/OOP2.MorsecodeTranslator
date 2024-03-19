@@ -22,7 +22,7 @@ public class UserAccountEdit : BaseUserAccount
             {
                 Console.Clear();
                 Console.WriteLine("Do you want to change the Username or Password");
-                var fieldToEdit = DisplayMenu.CreateMenu(new[] { "Username", "Password", "Exit" });
+                var fieldToEdit = DisplayMenu.CreateMenu(new[] { "Username", "Password"});
 
                 switch (fieldToEdit)
                 {

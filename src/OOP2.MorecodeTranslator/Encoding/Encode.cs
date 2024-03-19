@@ -19,7 +19,7 @@
                 var messageInt = i;
                 while (messageInt != 0)
                 {
-                    encodedMessage += chars[(int)(messageInt % 36)];
+                    encodedMessage += chars[(int)(messageInt % 35)];
                     messageInt /= 36;
                 }
 
