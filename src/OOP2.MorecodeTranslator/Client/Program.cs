@@ -1,5 +1,6 @@
 ﻿namespace Client;
 
+using AEncoding;
 using Menu;
 using Resources;
 using Train.Contracts;
@@ -12,6 +13,19 @@ public static class Program
 {
     private static void Main(string[] args)
     {
+        var chars = "1234567890ABCDEFGHIJKLMNOPQURSTUVWXYZ";
+        var message = "Hello, World!";
+
+        var encodedMessage = EncodeMessage.Encode(message, chars);
+
+        Console.WriteLine(encodedMessage);
+
+        var decodedMessage = DecodeMessage.Decode(encodedMessage, chars);
+
+        Console.WriteLine(decodedMessage);
+
+        Console.ReadKey();
+
         Program.InitiateProgram();
 
         bool exit;
