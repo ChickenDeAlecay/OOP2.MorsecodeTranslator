@@ -4,14 +4,13 @@ using System.Security.Cryptography;
 
 public static class Encrypt
 {
-    public static string EncryptMessage(string message, string key)
+    public static byte[] EncryptMessage(string message, string key)
     {
         // Check arguments.
         if (message == null || message.Length <= 0)
             throw new ArgumentNullException("message");
         if (key == null || key.Length <= 0)
             throw new ArgumentNullException("key");
-        string encrypted;
 
         // Derive a new password using the PBKDF2 algorithm and a random salt
         var passwordBytes = new Rfc2898DeriveBytes(key, 20);
@@ -33,8 +32,7 @@ public static class Encrypt
             swEncrypt.Write(message);
         }
 
-        encrypted = Convert.ToBase64String(msEncrypt.ToArray());
-
+        var encrypted = msEncrypt.ToArray();
 
         // Return the encrypted bytes from the memory stream.
         return encrypted;

@@ -1,16 +1,15 @@
-﻿namespace Translate.Implementations;
-
-using AEncoding;
+﻿using AEncoding;
 using Encryption;
 using Menu;
 using Resources;
+
+namespace Translate.Implementations;
+
 using Translate.Contracts;
 
-public class TranslateFromInternational : ITranslate
+public class TranslateFromMorsecode : ITranslate
 {
-    public string TranslationSetPath => "Translation Sets\\international.txt";
-
-    public TranslateFromInternational(ReadTranslationSet translationSet)
+    public TranslateFromMorsecode(ReadTranslationSet translationSet)
     {
         this.TranslationTable = translationSet.TranslationSet;
     }
@@ -47,13 +46,13 @@ public class TranslateFromInternational : ITranslate
 
             message = this.TranslateFromMorsecode(message);
 
-            message = DecodeMessage.Decode(message, characterSet);
+            var decodedMessage = DecodeMessage.Decode(message, characterSet);
 
             var aesKey = Console.ReadLine();
 
-            message = Decrypt.DecryptMessage(message, aesKey);
+            var decryptedMessage = Decrypt.DecryptMessage(decodedMessage, aesKey);
 
-            Console.WriteLine(message);
+            Console.WriteLine(decryptedMessage);
         } while (true);
     }
 

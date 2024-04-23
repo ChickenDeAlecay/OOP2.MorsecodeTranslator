@@ -1,6 +1,5 @@
 ﻿namespace Client;
 
-using AEncoding;
 using Menu;
 using Resources;
 using Train.Contracts;
@@ -13,19 +12,6 @@ public static class Program
 {
     private static void Main(string[] args)
     {
-        var chars = "1234567890ABCDEFGHIJKLMNOPQURSTUVWXYZ";
-        var message = "Hello, World!";
-
-        var encodedMessage = EncodeMessage.Encode(message, chars);
-
-        Console.WriteLine(encodedMessage);
-
-        var decodedMessage = DecodeMessage.Decode(encodedMessage, chars);
-
-        Console.WriteLine(decodedMessage);
-
-        Console.ReadKey();
-
         Program.InitiateProgram();
 
         bool exit;
@@ -156,22 +142,22 @@ public static class Program
             switch (menuOption)
             {
                 case 1:
-                    translate = new TranslateToInternational(translationSetInternatioanl);
+                    translate = new TranslateToMorsecode(translationSetInternatioanl);
                     translate.GetUserInput(user.Name);
                     exit = false;
                     break;
                 case 2:
-                    translate = new TranslateToAmerican(translationSetAmerican);
+                    translate = new TranslateToMorsecode(translationSetAmerican);
                     translate.GetUserInput(user.Name);
                     exit = false;
                     break;
                 case 3:
-                    translate = new TranslateFromInternational(translationSetInternatioanl);
+                    translate = new TranslateFromMorsecode(translationSetInternatioanl);
                     translate.GetUserInput(user.Name);
                     exit = false;
                     break;
                 case 4:
-                    translate = new TranslateFromAmerican(translationSetAmerican);
+                    translate = new TranslateFromMorsecode(translationSetAmerican);
                     translate.GetUserInput(user.Name);
                     exit = false;
                     break;
