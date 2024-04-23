@@ -7,12 +7,13 @@ public static class EncodeMessage
 {
     public static string Encode(byte[] message, string chars)
     {
-        var dividend = new BigInteger(message);
+        var dividend = new BigInteger(message, true);
         var builder = new StringBuilder();
         while (dividend != 0)
         {
             dividend = BigInteger.DivRem(dividend, chars.Length, out var remainder);
-            builder.Insert(0, chars[Math.Abs((int)remainder)]);
+            var encodedChar = chars[(int)remainder];
+            builder.Insert(0, encodedChar);
         }
 
         return builder.ToString();

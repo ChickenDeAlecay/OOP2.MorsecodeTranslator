@@ -25,6 +25,7 @@ public static class Decrypt
         using var aesAlg = Aes.Create();
         aesAlg.Key = passwordBytes.GetBytes(32);
         aesAlg.IV = IV;
+        aesAlg.Padding = PaddingMode.PKCS7;
 
         // Create a decryptor to perform the stream transform.
         var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
@@ -37,6 +38,7 @@ public static class Decrypt
                 using (var msPlain = new MemoryStream())
                 {
                     csDecrypt.CopyTo(msPlain);
+                    //TODO: Fix padding issue
                     decryptedBytes = msPlain.ToArray();
                 }
             }

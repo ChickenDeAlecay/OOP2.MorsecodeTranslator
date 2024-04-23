@@ -6,6 +6,7 @@ using Resources;
 namespace Translate.Implementations;
 
 using System.Security.Cryptography;
+using System.Text;
 using Translate.Contracts;
 
 public class TranslateToMorsecode : ITranslate
@@ -37,6 +38,8 @@ public class TranslateToMorsecode : ITranslate
 
         var encryptedMessage = Encrypt.EncryptMessage(usersString, aesKey, myAes.IV);
 
+        Console.WriteLine(Encoding.Default.GetString(encryptedMessage));
+
         var encodedMessage = EncodeMessage.Encode(encryptedMessage, characterSet);
 
         Console.WriteLine(encodedMessage);
@@ -50,6 +53,7 @@ public class TranslateToMorsecode : ITranslate
         Console.ReadKey();
     }
 
+    //TODO: make it so that the space between morsecode is "  " to be able to use American translation set
     private string Translate(string userMessage)
     {
         var userMessageArray = userMessage.ToCharArray();

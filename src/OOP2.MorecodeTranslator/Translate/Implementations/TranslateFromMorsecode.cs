@@ -6,6 +6,7 @@ using Resources;
 namespace Translate.Implementations;
 
 using System.Security.Cryptography;
+using System.Text;
 using Translate.Contracts;
 
 public class TranslateFromMorsecode : ITranslate
@@ -52,6 +53,8 @@ public class TranslateFromMorsecode : ITranslate
             Console.WriteLine(message);
 
             var decodedMessage = DecodeMessage.Decode(message, characterSet);
+
+            Console.WriteLine(Encoding.Default.GetString(decodedMessage));
 
             using var myAes = Aes.Create();
 

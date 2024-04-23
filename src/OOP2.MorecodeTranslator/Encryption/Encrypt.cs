@@ -21,6 +21,7 @@ public static class Encrypt
         using var aesAlg = Aes.Create();
         aesAlg.Key = passwordBytes.GetBytes(32);
         aesAlg.IV = IV;
+        aesAlg.Padding = PaddingMode.PKCS7;
 
         // Create an encryptor to perform the stream transform.
         var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
