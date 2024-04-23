@@ -5,6 +5,7 @@ using Resources;
 
 namespace Translate.Implementations;
 
+using System.Security.Cryptography;
 using Translate.Contracts;
 
 public class TranslateToMorsecode : ITranslate
@@ -30,13 +31,19 @@ public class TranslateToMorsecode : ITranslate
         for (var i = 0; i < this.TranslationTable.Length / 2; i++) characterSet += this.TranslationTable[i, 0];
         Console.WriteLine("Enter a key for your message encryption");
 
+        using var myAes = Aes.Create();
+
         var aesKey = Console.ReadLine();
 
-        var encryptedMessage = Encrypt.EncryptMessage(usersString.ToUpper(), aesKey);
+        var encryptedMessage = Encrypt.EncryptMessage(usersString, aesKey, myAes.IV);
 
         var encodedMessage = EncodeMessage.Encode(encryptedMessage, characterSet);
 
+        Console.WriteLine(encodedMessage);
+
         var message = this.Translate(encodedMessage);
+
+        Console.WriteLine(message);
 
         CreateLog.Log(userName, message);
 

@@ -5,6 +5,7 @@ using Resources;
 
 namespace Translate.Implementations;
 
+using System.Security.Cryptography;
 using Translate.Contracts;
 
 public class TranslateFromMorsecode : ITranslate
@@ -44,19 +45,27 @@ public class TranslateFromMorsecode : ITranslate
 
             var message = File.ReadAllText(files[selectedFile - 1]);
 
-            message = this.TranslateFromMorsecode(message);
+            Console.WriteLine(message);
+
+            message = this.Translate(message);
+
+            Console.WriteLine(message);
 
             var decodedMessage = DecodeMessage.Decode(message, characterSet);
 
+            using var myAes = Aes.Create();
+
+            Console.WriteLine("Enter a key for your message decryption");
+
             var aesKey = Console.ReadLine();
 
-            var decryptedMessage = Decrypt.DecryptMessage(decodedMessage, aesKey);
+            var decryptedMessage = Decrypt.DecryptMessage(decodedMessage, aesKey, myAes.IV);
 
             Console.WriteLine(decryptedMessage);
         } while (true);
     }
 
-    private string TranslateFromMorsecode(string message)
+    private string Translate(string message)
     {
         var messageArray = message.Split(' ');
         var translatedMorsecode = string.Empty;

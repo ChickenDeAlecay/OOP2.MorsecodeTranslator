@@ -9,10 +9,10 @@ public static class DecodeMessage
         var charArray = baseChars.ToCharArray();
         var decodedValue = BigInteger.Zero;
 
-        foreach (var charIndex in message.Select(encodedChar => Array.IndexOf(charArray, encodedChar)))
+
+        foreach (var letter in message)
         {
-            if (charIndex is -1)
-                throw new ArgumentException("The encoding contains unknown characters", nameof(message));
+            var charIndex = Array.IndexOf(charArray, letter);
 
             decodedValue = BigInteger.Add(BigInteger.Multiply(decodedValue, baseChars.Length), charIndex);
         }
