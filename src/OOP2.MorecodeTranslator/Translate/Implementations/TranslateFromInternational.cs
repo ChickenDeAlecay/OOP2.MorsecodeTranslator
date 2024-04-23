@@ -8,12 +8,13 @@ using Translate.Contracts;
 
 public class TranslateFromInternational : ITranslate
 {
+    public string TranslationSetPath => "Translation Sets\\international.txt";
+
     public TranslateFromInternational(ReadTranslationSet translationSet)
     {
         this.TranslationTable = translationSet.TranslationSet;
     }
 
-    public string TranslationSetPath => "Translation Sets\\international.txt";
     public string[,] TranslationTable { get; set; }
 
     public void GetUserInput(string? userName)
@@ -40,14 +41,11 @@ public class TranslateFromInternational : ITranslate
 
             var characterSet = string.Empty;
 
-            for (int i = 0; i < TranslationTable.Length / 2; i++)
-            {
-                characterSet += TranslationTable[i, 0];
-            }
+            for (var i = 0; i < this.TranslationTable.Length / 2; i++) characterSet += this.TranslationTable[i, 0];
 
             var message = File.ReadAllText(files[selectedFile - 1]);
 
-            message = TranslateFromMorsecode(message);
+            message = this.TranslateFromMorsecode(message);
 
             message = DecodeMessage.Decode(message, characterSet);
 

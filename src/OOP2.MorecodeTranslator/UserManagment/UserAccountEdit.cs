@@ -22,7 +22,7 @@ public class UserAccountEdit : BaseUserAccount
             {
                 Console.Clear();
                 Console.WriteLine("Do you want to change the Username or Password");
-                var fieldToEdit = DisplayMenu.CreateMenu(new[] { "Username", "Password"});
+                var fieldToEdit = DisplayMenu.CreateMenu(new[] { "Username", "Password" });
 
                 switch (fieldToEdit)
                 {
@@ -37,7 +37,9 @@ public class UserAccountEdit : BaseUserAccount
                         break;
                     case 2:
                         usersInfo[selectedAccount - 1] = selectedUser[0] + ',' +
-                                                         UserAccountEdit.ChangePassword(int.Parse(selectedUser[2] ?? throw new InvalidOperationException())) + ',' + selectedUser[2];
+                                                         UserAccountEdit.ChangePassword(int.Parse(selectedUser[2] ??
+                                                             throw new InvalidOperationException())) + ',' +
+                                                         selectedUser[2];
                         BaseUserAccount.UpdateFile(usersInfo, path);
                         CreateLog.Log(name, $"{name} has updated a user.\n{usersInfo[0]}'s password has been updated");
                         finishedEditing = true;

@@ -1,6 +1,5 @@
 ﻿namespace Translate.Implementations;
 
-using System.Security.Cryptography;
 using AEncoding;
 using Encryption;
 using Menu;
@@ -9,12 +8,13 @@ using Translate.Contracts;
 
 public class TranslateFromAmerican : ITranslate
 {
+    public string TranslationSetPath => "Translation Sets\\american.txt";
+
     public TranslateFromAmerican(ReadTranslationSet translationSet)
     {
         this.TranslationTable = translationSet.TranslationSet;
     }
 
-    public string TranslationSetPath => "Translation Sets\\american.txt";
     public string[,] TranslationTable { get; set; }
 
     public void GetUserInput(string? userName)
@@ -39,14 +39,11 @@ public class TranslateFromAmerican : ITranslate
 
             var characterSet = string.Empty;
 
-            for (int i = 0; i < TranslationTable.Length / 2; i++)
-            {
-                characterSet += TranslationTable[i, 0];
-            }
+            for (var i = 0; i < this.TranslationTable.Length / 2; i++) characterSet += this.TranslationTable[i, 0];
 
             var message = File.ReadAllText(files[selectedFile - 1]);
 
-            message = TranslateFromMorsecode(message);
+            message = this.TranslateFromMorsecode(message);
 
             message = DecodeMessage.Decode(message, characterSet);
 

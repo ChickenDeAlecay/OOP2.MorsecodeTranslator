@@ -1,20 +1,19 @@
 ﻿namespace Translate.Implementations;
 
-using System.Text;
+using AEncoding;
 using Encryption;
 using Logger;
 using Resources;
 using Translate.Contracts;
-using AEncoding;
 
 public class TranslateToAmerican : ITranslate
 {
+    public string TranslationSetPath => "Translation Sets\\american.txt";
+
     public TranslateToAmerican(ReadTranslationSet translationSet)
     {
         this.TranslationTable = translationSet.TranslationSet;
     }
-
-    public string TranslationSetPath => "Translation Sets\\american.txt";
 
     public string[,] TranslationTable { get; set; }
 
@@ -47,10 +46,7 @@ public class TranslateToAmerican : ITranslate
 
         var characterSet = string.Empty;
 
-        for (int i = 0; i < TranslationTable.Length/2; i++)
-        {
-            characterSet += TranslationTable[i,0];
-        }
+        for (var i = 0; i < this.TranslationTable.Length / 2; i++) characterSet += this.TranslationTable[i, 0];
 
         var aesKey = Console.ReadLine();
 
@@ -71,10 +67,8 @@ public class TranslateToAmerican : ITranslate
     {
         if (key == ConsoleKey.Spacebar) return true;
         foreach (var letter in this.TranslationTable)
-            if (Equals(keyInfo.ToString().ToUpper(), letter))
-            {
+            if (object.Equals(keyInfo.ToString().ToUpper(), letter))
                 return true;
-            }
         return false;
     }
 

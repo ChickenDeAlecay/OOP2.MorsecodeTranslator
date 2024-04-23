@@ -140,7 +140,8 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void Translate(User user, ReadTranslationSet translationSetInternatioanl, ReadTranslationSet translationSetAmerican)
+    private static void Translate(User user, ReadTranslationSet translationSetInternatioanl,
+        ReadTranslationSet translationSetAmerican)
     {
         bool exit;
         do
@@ -184,7 +185,8 @@ public static class Program
         } while (exit == false);
     }
 
-    private static void Train(User user, ReadTranslationSet translationSetInternatioanl, ReadTranslationSet translationSetAmerican)
+    private static void Train(User user, ReadTranslationSet translationSetInternatioanl,
+        ReadTranslationSet translationSetAmerican)
     {
         bool exit;
         do
@@ -222,21 +224,20 @@ public static class Program
             Directory.CreateDirectory("Users");
             File.Create("Users\\Logins.csv");
             //File.Create("Users\\Admin.csv");
-            File.AppendAllLines("Users\\Admin.csv",new List<string>());
+            File.AppendAllLines("Users\\Admin.csv", new List<string>());
 
             Console.WriteLine("No Admin Accounts found\nPress any key to continue to create acount");
             Console.ReadKey();
             UserAccountRegister.RegisterUser("Users\\Admin.csv", "");
         }
 
-        if (Directory.Exists("Logs") == false)
-        {
-            Directory.CreateDirectory("Logs");
-        }
+        if (Directory.Exists("Logs") == false) Directory.CreateDirectory("Logs");
 
         if (Directory.Exists("Translation Sets") == false)
         {
-            string translationsetPath = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory())!.Parent!.Parent!.Parent!.FullName, "Resources\\Translation Sets");
+            var translationsetPath =
+                Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.Parent!.FullName,
+                    "Resources\\Translation Sets");
             Directory.CreateDirectory("Translation Sets");
             File.Copy(translationsetPath + "\\american.txt", "Translation Sets\\american.txt");
             File.Copy(translationsetPath + "\\international.txt", "Translation Sets\\international.txt");

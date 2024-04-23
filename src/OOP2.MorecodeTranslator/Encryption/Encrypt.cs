@@ -36,7 +36,6 @@ public static class Encrypt
         encrypted = Convert.ToBase64String(msEncrypt.ToArray());
 
 
-
         // Return the encrypted bytes from the memory stream.
         return encrypted;
     }

@@ -2,11 +2,13 @@
 
 public class ReadTranslationSet
 {
+    public string[,] TranslationSet { get; set; }
+
     public ReadTranslationSet(string filePath)
     {
-        this.TranslationSet = GetTranslationSet(filePath);
+        this.TranslationSet = this.GetTranslationSet(filePath);
     }
-    public string[,] TranslationSet { get; set; }
+
     public string[,] GetTranslationSet(string filePath)
     {
         var translationSet = new string[35, 2];

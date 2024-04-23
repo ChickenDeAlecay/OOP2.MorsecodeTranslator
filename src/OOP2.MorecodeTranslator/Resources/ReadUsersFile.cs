@@ -8,10 +8,7 @@ public static class ReadUsersFile
 
         var usersList = new List<string>();
 
-        foreach (var lines in file)
-        {
-            usersList.Add(lines);
-        }
+        foreach (var lines in file) usersList.Add(lines);
 
         return usersList;
     }
