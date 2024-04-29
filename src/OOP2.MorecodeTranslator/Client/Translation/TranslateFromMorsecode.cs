@@ -21,7 +21,9 @@ public class TranslateFromMorsecode : ITranslate
         {
             Console.Clear();
 
-            var directories = Directory.GetDirectories("Logs");
+            var directories = Directory.GetDirectories("Logs")
+                                       .Where(dir => !dir.EndsWith("Admin"))
+                                       .ToArray();
 
             var selectedDirectory = DisplayMenu.CreateMenu(directories);
 
