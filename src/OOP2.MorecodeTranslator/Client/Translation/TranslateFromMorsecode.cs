@@ -1,15 +1,11 @@
 ﻿namespace MorsecodeTranslator.Core.Translation;
 
-using System.Security.Cryptography;
+using MorsecodeTranslator.Core.Compression;
+using MorsecodeTranslator.Core.Encryption;
 
-public class TranslateFromMorsecode : ITranslate
+public class TranslateFromMorsecode(ReadTranslationSet translationSet) : ITranslate
 {
-    public TranslateFromMorsecode(ReadTranslationSet translationSet)
-    {
-        this.TranslationTable = translationSet.TranslationSet;
-    }
-
-    public string[,] TranslationTable { get; set; }
+    public string[,] TranslationTable { get; set; } = translationSet.TranslationSet;
 
     public void GetUserInput(string? userName)
     {
@@ -43,13 +39,19 @@ public class TranslateFromMorsecode : ITranslate
 
             message = this.Translate(message);
 
-            using var myAes = Aes.Create();
-
             Console.WriteLine("Enter a key for your message decryption");
 
             var aesKey = Console.ReadLine();
 
-            var decryptedMessage = Decrypt.DecryptMessage(Convert.FromHexString(message), aesKey);
+            while (string.IsNullOrEmpty(aesKey))
+            {
+                Console.WriteLine("Invalid input. Please enter a non-empty key.");
+                aesKey = Console.ReadLine();
+            }
+
+            var decompressedMessage = Decompress.DecompressBytes(Convert.FromHexString(message));
+
+            var decryptedMessage = Decrypt.DecryptMessage(decompressedMessage, aesKey);
 
             Console.WriteLine(decryptedMessage);
 

@@ -6,7 +6,7 @@ using MorsecodeTranslator.Core.UserAccountManagement;
 
 public static class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         Program.InitiateProgram();
 
@@ -175,8 +175,8 @@ public static class Program
         {
             Console.Clear();
             var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American" });
-            ITrain training;
 
+            TrainMorsecode training;
             switch (menuOption)
             {
                 case 1:

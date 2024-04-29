@@ -2,11 +2,11 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-[TestClass()]
-public class DisplayMenu_Tests
+[TestClass]
+public class DisplayMenuTests
 {
-    [TestMethod()]
-    public void CreateMenuTest()
+    [TestMethod]
+    public void CreateMenu_Test()
     {
         Assert.Fail();
     }

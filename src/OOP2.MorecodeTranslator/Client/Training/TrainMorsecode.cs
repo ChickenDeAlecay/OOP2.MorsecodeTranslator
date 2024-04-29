@@ -1,13 +1,8 @@
 ﻿namespace MorsecodeTranslator.Core.Training;
 
-public class TrainMorsecode : ITrain
+public class TrainMorsecode(ReadTranslationSet translationSet) : ITrain
 {
-    public TrainMorsecode(ReadTranslationSet translationSet)
-    {
-        this.TranslationTable = translationSet.TranslationSet;
-    }
-
-    public string[,] TranslationTable { get; set; }
+    public string[,] TranslationTable { get; set; } = translationSet.TranslationSet;
     public string[] TrainingResults { get; set; } = new string[15];
 
     public void Train(string? name)

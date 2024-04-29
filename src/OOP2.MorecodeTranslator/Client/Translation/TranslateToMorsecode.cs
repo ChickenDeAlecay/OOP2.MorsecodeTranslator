@@ -1,37 +1,39 @@
 ﻿namespace MorsecodeTranslator.Core.Translation;
 
-using System.Security.Cryptography;
+using MorsecodeTranslator.Core.Compression;
+using MorsecodeTranslator.Core.Encryption;
 
-public class TranslateToMorsecode : ITranslate
+public class TranslateToMorsecode(ReadTranslationSet translationSet) : ITranslate
 {
-    public TranslateToMorsecode(ReadTranslationSet translationSet)
-    {
-        this.TranslationTable = translationSet.TranslationSet;
-    }
-
-    public string[,] TranslationTable { get; set; }
+    public string[,] TranslationTable { get; set; } = translationSet.TranslationSet;
 
     public void GetUserInput(string? userName)
     {
-        var usersString = string.Empty;
-        ConsoleKey key;
-
         Console.WriteLine("Enter the string you would like to translate to morsecode");
 
-        usersString = Console.ReadLine();
+        var usersString = Console.ReadLine();
 
-        var characterSet = string.Empty;
+        while (string.IsNullOrEmpty(usersString))
+        {
+            Console.WriteLine("Invalid input. Please enter a non-empty string.");
+            usersString = Console.ReadLine();
+        }
 
-        for (var i = 0; i < this.TranslationTable.Length / 2; i++) characterSet += this.TranslationTable[i, 0];
         Console.WriteLine("Enter a key for your message encryption");
-
-        using var myAes = Aes.Create();
 
         var aesKey = Console.ReadLine();
 
+        while (string.IsNullOrEmpty(aesKey))
+        {
+            Console.WriteLine("Invalid input. Please enter a non-empty key.");
+            aesKey = Console.ReadLine();
+        }
+
         var encryptedMessage = Encrypt.EncryptMessage(usersString, aesKey);
 
-        var message = this.Translate(Convert.ToHexString(encryptedMessage));
+        var compressedMessage = Compress.CompressBytes(encryptedMessage);
+
+        var message = this.Translate(Convert.ToHexString(compressedMessage));
 
         CreateLog.Log(userName, message);
 
