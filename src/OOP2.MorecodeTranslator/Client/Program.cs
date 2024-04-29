@@ -224,7 +224,7 @@ public static class Program
         {
             var translationsetPath =
                 Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.Parent!.FullName,
-                    "Resources\\Translation Sets");
+                    "Client\\Translation Sets");
             Directory.CreateDirectory("Translation Sets");
             File.Copy(translationsetPath + "\\american.txt", "Translation Sets\\american.txt");
             File.Copy(translationsetPath + "\\international.txt", "Translation Sets\\international.txt");
