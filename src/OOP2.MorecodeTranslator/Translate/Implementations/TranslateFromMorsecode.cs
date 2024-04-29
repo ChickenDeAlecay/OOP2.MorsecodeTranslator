@@ -1,12 +1,9 @@
-﻿using AEncoding;
+﻿namespace Translate.Implementations;
+
+using System.Security.Cryptography;
 using Encryption;
 using Menu;
 using Resources;
-
-namespace Translate.Implementations;
-
-using System.Security.Cryptography;
-using System.Text;
 using Translate.Contracts;
 
 public class TranslateFromMorsecode : ITranslate
@@ -52,9 +49,9 @@ public class TranslateFromMorsecode : ITranslate
 
             Console.WriteLine(message);
 
-            var decodedMessage = DecodeMessage.Decode(message, characterSet);
+            //var decodedMessage = DecodeMessage.Decode(message, characterSet);
 
-            Console.WriteLine(Encoding.Default.GetString(decodedMessage));
+            Console.WriteLine(Convert.FromHexString(message));
 
             using var myAes = Aes.Create();
 
@@ -62,21 +59,23 @@ public class TranslateFromMorsecode : ITranslate
 
             var aesKey = Console.ReadLine();
 
-            var decryptedMessage = Decrypt.DecryptMessage(decodedMessage, aesKey, myAes.IV);
+            var decryptedMessage = Decrypt.DecryptMessage(Convert.FromHexString(message), aesKey);
 
             Console.WriteLine(decryptedMessage);
+
+            Console.ReadKey();
         } while (true);
     }
 
     private string Translate(string message)
     {
-        var messageArray = message.Split(' ');
+        var messageArray = message.Split("  ");
         var translatedMorsecode = string.Empty;
         foreach (var morsecode in messageArray)
         {
             if (morsecode == "|") translatedMorsecode += " ";
 
-            for (var i = 0; i < this.TranslationTable.Length / 2 - 1; i++)
+            for (var i = 0; i <= this.TranslationTable.Length / 2 - 1; i++)
                 if (morsecode == this.TranslationTable[i, 1])
                 {
                     translatedMorsecode += this.TranslationTable[i, 0];

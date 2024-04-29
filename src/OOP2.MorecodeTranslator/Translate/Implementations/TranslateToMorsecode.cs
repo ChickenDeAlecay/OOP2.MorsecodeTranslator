@@ -1,12 +1,9 @@
-﻿using AEncoding;
+﻿namespace Translate.Implementations;
+
+using System.Security.Cryptography;
 using Encryption;
 using Logger;
 using Resources;
-
-namespace Translate.Implementations;
-
-using System.Security.Cryptography;
-using System.Text;
 using Translate.Contracts;
 
 public class TranslateToMorsecode : ITranslate
@@ -36,15 +33,15 @@ public class TranslateToMorsecode : ITranslate
 
         var aesKey = Console.ReadLine();
 
-        var encryptedMessage = Encrypt.EncryptMessage(usersString, aesKey, myAes.IV);
+        var encryptedMessage = Encrypt.EncryptMessage(usersString, aesKey);
 
-        Console.WriteLine(Encoding.Default.GetString(encryptedMessage));
+        Console.WriteLine(Convert.ToHexString(encryptedMessage));
 
-        var encodedMessage = EncodeMessage.Encode(encryptedMessage, characterSet);
+        //var encodedMessage = EncodeMessage.Encode(encryptedMessage, characterSet);
 
-        Console.WriteLine(encodedMessage);
+        //Console.WriteLine(encodedMessage);
 
-        var message = this.Translate(encodedMessage);
+        var message = this.Translate(Convert.ToHexString(encryptedMessage));
 
         Console.WriteLine(message);
 
@@ -62,13 +59,13 @@ public class TranslateToMorsecode : ITranslate
         {
             var inputString = inputChar.ToString();
 
-            if (inputString == " ") translatedMorsecode.Add("| ");
+            if (inputString == " ") translatedMorsecode.Add("|  ");
 
-            for (var i = 0; i < this.TranslationTable.Length / 2 - 1; i++)
+            for (var i = 0; i <= this.TranslationTable.Length / 2 - 1; i++)
                 if (inputString == this.TranslationTable[i, 0])
                 {
                     translatedMorsecode.Add(this.TranslationTable[i, 1]);
-                    translatedMorsecode.Add(" ");
+                    translatedMorsecode.Add("  ");
                     break;
                 }
         }

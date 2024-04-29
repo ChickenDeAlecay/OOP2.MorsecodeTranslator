@@ -1,11 +1,10 @@
 ﻿namespace Encryption;
 
 using System.Security.Cryptography;
-using System.Text;
 
 public static class Decrypt
 {
-    public static string DecryptMessage(byte[] cipherText, string key, byte[] IV)
+    public static string DecryptMessage(byte[] cipherText, string key)
     {
         // Check arguments.
         if (cipherText == null || cipherText.Length <= 0)
@@ -15,46 +14,37 @@ public static class Decrypt
 
         // Declare the string used to hold
         // the decrypted text.
-
-        // Derive a new password using the PBKDF2 algorithm and a random salt
-        var passwordBytes = new Rfc2898DeriveBytes(key, 20, 10, HashAlgorithmName.SHA256);
-
+        string plaintext = null;
+        var passwordBytes = new Rfc2898DeriveBytes(key, BitConverter.GetBytes(20), 10000, HashAlgorithmName.SHA256);
 
         // Create an Aes object
         // with the specified key and IV.
-        using var aesAlg = Aes.Create();
-        aesAlg.Key = passwordBytes.GetBytes(32);
-        aesAlg.IV = IV;
-        aesAlg.Padding = PaddingMode.PKCS7;
-
-        // Create a decryptor to perform the stream transform.
-        var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-        byte[] decryptedBytes;
-
-        using (var msDecrypt = new MemoryStream(cipherText))
+        using (var aesAlg = Aes.Create())
         {
-            using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+            aesAlg.Key = passwordBytes.GetBytes(32);
+
+            // Create the streams used for decryption.
+            using (var msDecrypt = new MemoryStream(cipherText))
             {
-                using (var msPlain = new MemoryStream())
+                // Read the IV from the start of the stream
+                var iv = new byte[16];
+                msDecrypt.Read(iv, 0, iv.Length);
+                aesAlg.IV = iv;
+
+                var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                 {
-                    csDecrypt.CopyTo(msPlain);
-                    //TODO: Fix padding issue
-                    decryptedBytes = msPlain.ToArray();
+                    using (var srDecrypt = new StreamReader(csDecrypt))
+                    {
+                        // Read the decrypted bytes from the decrypting stream
+                        // and place them in a string.
+                        plaintext = srDecrypt.ReadToEnd();
+                    }
                 }
             }
         }
 
-        return Encoding.UTF8.GetString(decryptedBytes);
-
-
-        //// Create the streams used for decryption.
-        //using var msDecrypt = new MemoryStream(cipherText);
-        //using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
-        //using var srDecrypt = new StreamReader(csDecrypt);
-        //// Read the decrypted bytes from the decrypting stream
-        //// and place them in a string.
-        //var plaintext = srDecrypt.ReadToEnd();
-
-        //return plaintext;
+        return plaintext;
     }
 }
