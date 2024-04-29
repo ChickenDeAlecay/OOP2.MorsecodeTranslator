@@ -43,15 +43,7 @@ public class TranslateFromMorsecode : ITranslate
 
             var message = File.ReadAllText(files[selectedFile - 1]);
 
-            Console.WriteLine(message);
-
             message = this.Translate(message);
-
-            Console.WriteLine(message);
-
-            //var decodedMessage = DecodeMessage.Decode(message, characterSet);
-
-            Console.WriteLine(Convert.FromHexString(message));
 
             using var myAes = Aes.Create();
 

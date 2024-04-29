@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 
 public static class Decrypt
 {
+    //https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes?view=net-8.0
     public static string DecryptMessage(byte[] cipherText, string key)
     {
         // Check arguments.

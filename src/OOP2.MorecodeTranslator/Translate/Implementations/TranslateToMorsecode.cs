@@ -35,22 +35,13 @@ public class TranslateToMorsecode : ITranslate
 
         var encryptedMessage = Encrypt.EncryptMessage(usersString, aesKey);
 
-        Console.WriteLine(Convert.ToHexString(encryptedMessage));
-
-        //var encodedMessage = EncodeMessage.Encode(encryptedMessage, characterSet);
-
-        //Console.WriteLine(encodedMessage);
-
         var message = this.Translate(Convert.ToHexString(encryptedMessage));
-
-        Console.WriteLine(message);
 
         CreateLog.Log(userName, message);
 
         Console.ReadKey();
     }
 
-    //TODO: make it so that the space between morsecode is "  " to be able to use American translation set
     private string Translate(string userMessage)
     {
         var userMessageArray = userMessage.ToCharArray();
