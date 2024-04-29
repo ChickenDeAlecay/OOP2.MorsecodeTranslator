@@ -1,26 +1,22 @@
-﻿namespace Train.Implementations;
+﻿namespace Client.Training;
 
-using Client.Training;
 using Logger;
 using Resources;
 
-public class TrainAmerican : ITrain
+public class TrainMorsecode : ITrain
 {
-    public TrainAmerican(ReadTranslationSet translationSet)
+    public TrainMorsecode(ReadTranslationSet translationSet)
     {
         this.TranslationTable = translationSet.TranslationSet;
     }
 
-    public string TranslationSetPath => "Translation Sets\\american.txt";
-
     public string[,] TranslationTable { get; set; }
     public string[] TrainingResults { get; set; } = new string[15];
-
 
     public void Train(string? name)
     {
         Console.Clear();
-        Console.WriteLine("Morsecode Training - American:\n");
+        Console.WriteLine("Morsecode Training:\n");
 
         var random = new Random();
         var generatedInts = new List<int>();

@@ -5,7 +5,6 @@ using Client.Translation;
 using Client.UserAccountManagement;
 using Menu;
 using Resources;
-using Train.Implementations;
 using Translate.Contracts;
 using Translate.Implementations;
 using User;
@@ -186,12 +185,12 @@ public static class Program
             switch (menuOption)
             {
                 case 1:
-                    training = new TrainInternational(translationSetInternatioanl);
+                    training = new TrainMorsecode(translationSetInternatioanl);
                     training.Train(user.Name);
                     exit = false;
                     break;
                 case 2:
-                    training = new TrainAmerican(translationSetAmerican);
+                    training = new TrainMorsecode(translationSetAmerican);
                     training.Train(user.Name);
                     exit = false;
                     break;
