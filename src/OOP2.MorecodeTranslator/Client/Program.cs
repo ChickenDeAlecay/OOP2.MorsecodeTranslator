@@ -1,8 +1,8 @@
-﻿namespace Client;
+﻿namespace MorsecodeTranslator.Core;
 
-using Client.Training;
-using Client.Translation;
-using Client.UserAccountManagement;
+using MorsecodeTranslator.Core.Training;
+using MorsecodeTranslator.Core.Translation;
+using MorsecodeTranslator.Core.UserAccountManagement;
 
 public static class Program
 {

@@ -1,4 +1,4 @@
-﻿namespace Client;
+﻿namespace MorsecodeTranslator.Core;
 
 using System.Security.Cryptography;
 

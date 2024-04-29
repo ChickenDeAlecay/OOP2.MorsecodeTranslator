@@ -1,4 +1,4 @@
-﻿namespace Client.UserAccountManagement;
+﻿namespace MorsecodeTranslator.Core.UserAccountManagement;
 
 using System.Security.Cryptography;
 using System.Text;

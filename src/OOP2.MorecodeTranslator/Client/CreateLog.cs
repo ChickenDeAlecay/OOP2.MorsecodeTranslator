@@ -1,4 +1,4 @@
-﻿namespace Client;
+﻿namespace MorsecodeTranslator.Core;
 
 public static class CreateLog
 {

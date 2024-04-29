@@ -1,4 +1,4 @@
-﻿namespace Client.Translation;
+﻿namespace MorsecodeTranslator.Core.Translation;
 
 public interface ITranslate
 {
