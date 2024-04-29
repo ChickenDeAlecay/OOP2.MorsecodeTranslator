@@ -19,7 +19,7 @@ public class ReadTranslationSet
         var iteration = 0;
         foreach (var lines in translationChar)
         {
-            var alphabetTranslations = lines.Split(' ');
+            var alphabetTranslations = lines.Split(new[] { ' ' }, 2);
 
             translationSet[iteration, 0] = alphabetTranslations[0];
             translationSet[iteration, 1] = alphabetTranslations[1];
@@ -29,7 +29,7 @@ public class ReadTranslationSet
 
         foreach (var lines in translationNum)
         {
-            var numberTranslations = lines.Split(' ');
+            var numberTranslations = lines.Split(new[] { ' ' }, 2);
 
             translationSet[iteration, 0] = numberTranslations[0];
             translationSet[iteration, 1] = numberTranslations[1];
