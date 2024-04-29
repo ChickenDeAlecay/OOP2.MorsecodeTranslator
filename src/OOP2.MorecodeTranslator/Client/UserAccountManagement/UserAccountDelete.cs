@@ -1,7 +1,5 @@
 ﻿namespace Client.UserAccountManagement;
 
-using Logger;
-
 public class UserAccountDelete : BaseUserAccount
 {
     public static void DeleteUser(string path, string? name)

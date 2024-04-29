@@ -1,10 +1,6 @@
-﻿namespace Translate.Implementations;
+﻿namespace Client.Translation;
 
 using System.Security.Cryptography;
-using Encryption;
-using Menu;
-using Resources;
-using Translate.Contracts;
 
 public class TranslateFromMorsecode : ITranslate
 {

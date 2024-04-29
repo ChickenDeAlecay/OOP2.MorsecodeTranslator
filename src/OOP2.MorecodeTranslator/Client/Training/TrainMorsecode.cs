@@ -1,8 +1,5 @@
 ﻿namespace Client.Training;
 
-using Logger;
-using Resources;
-
 public class TrainMorsecode : ITrain
 {
     public TrainMorsecode(ReadTranslationSet translationSet)

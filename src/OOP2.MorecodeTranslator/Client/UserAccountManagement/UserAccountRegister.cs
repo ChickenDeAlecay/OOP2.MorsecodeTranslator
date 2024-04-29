@@ -1,9 +1,7 @@
-﻿namespace Menu;
+﻿namespace Client.UserAccountManagement;
 
 using System.Security.Cryptography;
 using System.Text;
-using Client.UserAccountManagement;
-using Logger;
 
 public class UserAccountRegister : BaseUserAccount
 {

@@ -1,7 +1,4 @@
-﻿namespace Menu;
-
-using Client.UserAccountManagement;
-using Logger;
+﻿namespace Client.UserAccountManagement;
 
 public class UserAccountEdit : BaseUserAccount
 {

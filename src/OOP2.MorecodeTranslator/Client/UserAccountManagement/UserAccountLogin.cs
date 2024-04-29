@@ -1,7 +1,4 @@
-﻿namespace Menu;
-
-using Client.UserAccountManagement;
-using User;
+﻿namespace Client.UserAccountManagement;
 
 public class UserAccountLogin : BaseUserAccount
 {

@@ -1,4 +1,4 @@
-﻿namespace Translate.Contracts;
+﻿namespace Client.Translation;
 
 public interface ITranslate
 {

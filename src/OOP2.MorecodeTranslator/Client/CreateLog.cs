@@ -1,4 +1,4 @@
-﻿namespace Logger;
+﻿namespace Client;
 
 public static class CreateLog
 {

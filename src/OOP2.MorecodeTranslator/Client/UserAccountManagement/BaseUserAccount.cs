@@ -1,7 +1,6 @@
 ﻿namespace Client.UserAccountManagement;
 
 using System.Text;
-using Menu;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 public abstract class BaseUserAccount

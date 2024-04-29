@@ -1,4 +1,4 @@
-﻿namespace Menu;
+﻿namespace Client;
 
 public static class DisplayMenu
 {

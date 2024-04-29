@@ -1,4 +1,4 @@
-﻿namespace Resources;
+﻿namespace Client;
 
 public class ReadTranslationSet
 {

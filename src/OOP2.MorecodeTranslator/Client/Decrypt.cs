@@ -1,4 +1,4 @@
-﻿namespace Encryption;
+﻿namespace Client;
 
 using System.Security.Cryptography;
 

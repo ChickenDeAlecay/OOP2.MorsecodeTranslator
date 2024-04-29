@@ -3,11 +3,6 @@
 using Client.Training;
 using Client.Translation;
 using Client.UserAccountManagement;
-using Menu;
-using Resources;
-using Translate.Contracts;
-using Translate.Implementations;
-using User;
 
 public static class Program
 {

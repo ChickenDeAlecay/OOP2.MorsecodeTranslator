@@ -1,4 +1,4 @@
-﻿namespace User;
+﻿namespace Client;
 
 public class User(string? name, bool created)
 {
