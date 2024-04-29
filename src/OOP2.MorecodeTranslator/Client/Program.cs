@@ -1,8 +1,10 @@
 ﻿namespace Client;
 
+using Client.Training;
+using Client.Translation;
+using Client.UserAccountManagement;
 using Menu;
 using Resources;
-using Train.Contracts;
 using Train.Implementations;
 using Translate.Contracts;
 using Translate.Implementations;

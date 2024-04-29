@@ -8,10 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Menu\Menu.csproj" />
-    <ProjectReference Include="..\Train\Train.csproj" />
-    <ProjectReference Include="..\Translate\Translate.csproj" />
-    <ProjectReference Include="..\UserManagment\UserManagment.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="8.0.4" />
   </ItemGroup>
 
 </Project>
