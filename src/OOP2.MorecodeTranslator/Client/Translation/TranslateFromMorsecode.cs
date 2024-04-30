@@ -31,10 +31,6 @@ public class TranslateFromMorsecode(ReadTranslationSet translationSet) : ITransl
             if (selectedFile == files.Length + 1) break;
             if (selectedFile > files.Length + 1) continue;
 
-            var characterSet = string.Empty;
-
-            for (var i = 0; i < this.TranslationTable.Length / 2; i++) characterSet += this.TranslationTable[i, 0];
-
             var message = File.ReadAllText(files[selectedFile - 1]);
 
             message = this.Translate(message);

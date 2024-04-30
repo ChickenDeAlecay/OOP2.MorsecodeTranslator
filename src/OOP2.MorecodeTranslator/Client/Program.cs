@@ -15,7 +15,7 @@ public static class Program
         {
             Console.Clear();
 
-            var menuOption = DisplayMenu.CreateMenu(new[] { "User Login", "Admin Login" });
+            var menuOption = DisplayMenu.CreateMenu(["User Login", "Admin Login"]);
 
             User user;
 
@@ -48,12 +48,11 @@ public static class Program
         {
             Console.Clear();
 
-            var menuOption = DisplayMenu.CreateMenu(new[]
-            {
+            var menuOption = DisplayMenu.CreateMenu([
                 "Create New User", "Change User Details", "Delete User Account", "Create New Admin",
                 "Change Admin Details",
                 "Delete Admin Account"
-            });
+            ]);
 
             switch (menuOption)
             {
@@ -100,7 +99,7 @@ public static class Program
         {
             Console.Clear();
 
-            var menuOption = DisplayMenu.CreateMenu(new[] { "Translate", "Train" });
+            var menuOption = DisplayMenu.CreateMenu(["Translate", "Train"]);
 
             switch (menuOption)
             {
@@ -129,10 +128,9 @@ public static class Program
         do
         {
             Console.Clear();
-            var menuOption = DisplayMenu.CreateMenu(new[]
-            {
+            var menuOption = DisplayMenu.CreateMenu([
                 "Text to International", "Text to American", "Morsecode to International", "Morsecode to American"
-            });
+            ]);
             ITranslate translate;
 
             switch (menuOption)
@@ -174,7 +172,7 @@ public static class Program
         do
         {
             Console.Clear();
-            var menuOption = DisplayMenu.CreateMenu(new[] { "International", "American" });
+            var menuOption = DisplayMenu.CreateMenu(["International", "American"]);
 
             TrainMorsecode training;
             switch (menuOption)
@@ -205,7 +203,6 @@ public static class Program
         {
             Directory.CreateDirectory("Users");
             File.Create("Users\\Logins.csv");
-            //File.Create("Users\\Admin.csv");
             File.AppendAllLines("Users\\Admin.csv", new List<string>());
 
             Console.WriteLine("No Admin Accounts found\nPress any key to continue to create acount");

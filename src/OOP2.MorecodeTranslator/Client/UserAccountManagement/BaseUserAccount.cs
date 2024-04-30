@@ -74,7 +74,7 @@ public abstract class BaseUserAccount
 
         // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
         var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            userPassword!,
+            userPassword,
             salt,
             KeyDerivationPrf.HMACSHA256,
             100000,

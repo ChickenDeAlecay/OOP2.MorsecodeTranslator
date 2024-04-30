@@ -11,7 +11,7 @@ public static class Decrypt
         if (cipherText == null || cipherText.Length <= 0)
             throw new ArgumentNullException(nameof(cipherText));
         if (key == null || key.Length <= 0)
-            throw new ArgumentNullException("Key");
+            throw new ArgumentNullException(nameof(key));
 
         // Declare the string used to hold
         // the decrypted text.
@@ -26,7 +26,7 @@ public static class Decrypt
         using var msDecrypt = new MemoryStream(cipherText);
         // Read the IV from the start of the stream
         var iv = new byte[16];
-        var read = msDecrypt.Read(iv, 0, iv.Length);
+        //var read = msDecrypt.Read(iv, 0, iv.Length);
         aesAlg.IV = iv;
 
         var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
