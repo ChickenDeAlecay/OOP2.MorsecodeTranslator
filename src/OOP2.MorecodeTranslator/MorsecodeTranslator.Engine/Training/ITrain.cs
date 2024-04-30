@@ -1,4 +1,4 @@
-﻿namespace MorsecodeTranslator.Core.Training;
+﻿namespace MorsecodeTranslator.Engine.Training;
 
 public interface ITrain
 {

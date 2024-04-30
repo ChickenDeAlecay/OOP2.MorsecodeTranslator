@@ -1,4 +1,4 @@
-﻿namespace MorsecodeTranslator.Core.Training;
+﻿namespace MorsecodeTranslator.Engine.Training;
 
 public class TrainMorsecode(ReadTranslationSet translationSet) : ITrain
 {

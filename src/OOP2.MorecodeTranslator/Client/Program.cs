@@ -1,8 +1,9 @@
 ﻿namespace MorsecodeTranslator.Core;
 
-using MorsecodeTranslator.Core.Training;
-using MorsecodeTranslator.Core.Translation;
-using MorsecodeTranslator.Core.UserAccountManagement;
+using MorsecodeTranslator.Engine;
+using MorsecodeTranslator.Engine.Training;
+using MorsecodeTranslator.Engine.Translation;
+using MorsecodeTranslator.Engine.UserAccountManagement;
 
 public static class Program
 {

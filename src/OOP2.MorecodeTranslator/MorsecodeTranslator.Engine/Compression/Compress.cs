@@ -1,4 +1,4 @@
-﻿namespace MorsecodeTranslator.Core.Compression;
+﻿namespace MorsecodeTranslator.Engine.Compression;
 
 using System.IO.Compression;
 

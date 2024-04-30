@@ -1,4 +1,4 @@
-﻿namespace MorsecodeTranslator.Core.UserAccountManagement;
+﻿namespace MorsecodeTranslator.Engine.UserAccountManagement;
 
 public static class ReadUsersFile
 {

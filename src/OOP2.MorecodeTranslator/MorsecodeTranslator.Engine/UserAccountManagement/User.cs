@@ -1,4 +1,4 @@
-﻿namespace MorsecodeTranslator.Core;
+﻿namespace MorsecodeTranslator.Engine.UserAccountManagement;
 
 public class User(string? name, bool created)
 {

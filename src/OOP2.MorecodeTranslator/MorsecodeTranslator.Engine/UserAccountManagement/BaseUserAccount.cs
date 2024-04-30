@@ -1,4 +1,4 @@
-﻿namespace MorsecodeTranslator.Core.UserAccountManagement;
+﻿namespace MorsecodeTranslator.Engine.UserAccountManagement;
 
 using System.Text;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;

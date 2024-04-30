@@ -1,7 +1,7 @@
-﻿namespace MorsecodeTranslator.Core.Translation;
+﻿namespace MorsecodeTranslator.Engine.Translation;
 
-using MorsecodeTranslator.Core.Compression;
-using MorsecodeTranslator.Core.Encryption;
+using MorsecodeTranslator.Engine.Compression;
+using MorsecodeTranslator.Engine.Encryption;
 
 public class TranslateToMorsecode(ReadTranslationSet translationSet) : ITranslate
 {

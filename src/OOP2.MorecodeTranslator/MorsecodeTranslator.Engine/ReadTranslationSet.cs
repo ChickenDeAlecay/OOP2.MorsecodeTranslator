@@ -1,4 +1,4 @@
-﻿namespace MorsecodeTranslator.Core;
+﻿namespace MorsecodeTranslator.Engine;
 
 public class ReadTranslationSet
 {
