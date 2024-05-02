@@ -15,7 +15,7 @@ public static class Encrypt
 
         // Generate a salt
         var salt = new byte[16];
-        using (var rng = new RNGCryptoServiceProvider())
+        using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(salt);
         }

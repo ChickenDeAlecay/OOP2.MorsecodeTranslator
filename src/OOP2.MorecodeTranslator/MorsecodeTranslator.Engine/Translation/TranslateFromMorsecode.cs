@@ -46,15 +46,20 @@ public class TranslateFromMorsecode(ReadTranslationSet translationSet) : ITransl
                 aesKey = Console.ReadLine();
             }
 
-            var decryptedMessage = Decrypt.DecryptMessage(Convert.FromHexString(message), aesKey);
-
-            var decompressedMessage = Decompress.DecompressBytes(decryptedMessage);
-
-            Console.WriteLine(Encoding.UTF8.GetString(decompressedMessage));
+            var decryptedMessage = this.ProcessData(message, aesKey);
 
             Console.Write("Press any key to continue");
             Console.ReadKey();
         } while (true);
+    }
+
+    private string ProcessData(string message, string key)
+    {
+        var decryptedMessage = Decrypt.DecryptMessage(Convert.FromHexString(message), key);
+
+        var decompressedMessage = Decompress.DecompressBytes(decryptedMessage);
+
+        return Encoding.UTF8.GetString(decompressedMessage);
     }
 
     private string Translate(string message)
