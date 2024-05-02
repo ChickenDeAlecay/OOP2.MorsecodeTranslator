@@ -9,7 +9,7 @@ public class ReadTranslationSet
         this.TranslationSet = this.GetTranslationSet(filePath);
     }
 
-    public string[,] GetTranslationSet(string filePath)
+    private string[,] GetTranslationSet(string filePath)
     {
         var translationSet = new string[35, 2];
 

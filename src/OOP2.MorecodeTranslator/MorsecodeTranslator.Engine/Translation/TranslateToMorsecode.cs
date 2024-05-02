@@ -1,5 +1,6 @@
 ﻿namespace MorsecodeTranslator.Engine.Translation;
 
+using System.Text;
 using MorsecodeTranslator.Engine.Compression;
 using MorsecodeTranslator.Engine.Encryption;
 
@@ -29,11 +30,11 @@ public class TranslateToMorsecode(ReadTranslationSet translationSet) : ITranslat
             aesKey = Console.ReadLine();
         }
 
-        var encryptedMessage = Encrypt.EncryptMessage(usersString, aesKey);
+        var compressedMessage = Compress.CompressBytes(Encoding.UTF8.GetBytes(usersString));
 
-        var compressedMessage = Compress.CompressBytes(encryptedMessage);
+        var encryptedMessage = Encrypt.EncryptMessage(compressedMessage, aesKey);
 
-        var message = this.Translate(Convert.ToHexString(compressedMessage));
+        var message = this.Translate(Convert.ToHexString(encryptedMessage));
 
         CreateLog.Log(userName, message);
 

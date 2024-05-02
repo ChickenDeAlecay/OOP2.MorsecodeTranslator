@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 public static class Encrypt
 {
     //https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes?view=net-8.0
-    public static byte[] EncryptMessage(string message, string key)
+    public static byte[] EncryptMessage(byte[] message, string key)
     {
         // Check arguments.
         if (message == null || message.Length <= 0)

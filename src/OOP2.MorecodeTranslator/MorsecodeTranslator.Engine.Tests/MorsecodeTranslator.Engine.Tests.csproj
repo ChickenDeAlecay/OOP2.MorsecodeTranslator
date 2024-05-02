@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\MorsecodeTranslator.Core.csproj" />
+    <ProjectReference Include="..\MorsecodeTranslator.Engine\MorsecodeTranslator.Engine.csproj" />
   </ItemGroup>
 
 </Project>

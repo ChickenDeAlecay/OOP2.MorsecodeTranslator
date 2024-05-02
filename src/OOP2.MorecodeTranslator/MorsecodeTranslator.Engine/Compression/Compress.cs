@@ -4,15 +4,12 @@ using System.IO.Compression;
 
 public static class Compress
 {
-    public static byte[] CompressBytes(byte[] buffer)
+    public static byte[] CompressBytes(byte[] data)
     {
-        using var memStream = new MemoryStream();
-
-        using (var gZipStream = new GZipStream(memStream, CompressionMode.Compress, true))
-        {
-            gZipStream.Write(buffer, 0, buffer.Length);
-        }
-
-        return memStream.ToArray();
+        using var compressedStream = new MemoryStream();
+        using var zipStream = new GZipStream(compressedStream, CompressionMode.Compress);
+        zipStream.Write(data, 0, data.Length);
+        zipStream.Close();
+        return compressedStream.ToArray();
     }
 }

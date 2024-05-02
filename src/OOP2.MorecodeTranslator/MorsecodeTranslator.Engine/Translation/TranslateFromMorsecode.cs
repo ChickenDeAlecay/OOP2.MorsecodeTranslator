@@ -1,5 +1,6 @@
 ﻿namespace MorsecodeTranslator.Engine.Translation;
 
+using System.Text;
 using MorsecodeTranslator.Engine.Compression;
 using MorsecodeTranslator.Engine.Encryption;
 
@@ -45,11 +46,11 @@ public class TranslateFromMorsecode(ReadTranslationSet translationSet) : ITransl
                 aesKey = Console.ReadLine();
             }
 
-            var decompressedMessage = Decompress.DecompressBytes(Convert.FromHexString(message));
+            var decryptedMessage = Decrypt.DecryptMessage(Convert.FromHexString(message), aesKey);
 
-            var decryptedMessage = Decrypt.DecryptMessage(decompressedMessage, aesKey);
+            var decompressedMessage = Decompress.DecompressBytes(Encoding.UTF8.GetBytes(decryptedMessage));
 
-            Console.WriteLine(decryptedMessage);
+            Console.WriteLine(Encoding.UTF8.GetString(decompressedMessage));
 
             Console.ReadKey();
         } while (true);

@@ -215,10 +215,12 @@ public static class Program
 
         if (Directory.Exists("Translation Sets") == false)
         {
+            Directory.CreateDirectory("Translation Sets");
+
             var translationsetPath =
                 Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.Parent!.FullName,
-                    "Client\\Translation Sets");
-            Directory.CreateDirectory("Translation Sets");
+                    "MorsecodeTranslator.Core\\Translation Sets");
+
             File.Copy(translationsetPath + "\\american.txt", "Translation Sets\\american.txt");
             File.Copy(translationsetPath + "\\international.txt", "Translation Sets\\international.txt");
         }
