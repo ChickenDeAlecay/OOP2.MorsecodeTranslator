@@ -15,7 +15,7 @@ public class TranslateFromMorsecode(ReadTranslationSet translationSet) : ITransl
             Console.Clear();
 
             var directories = Directory.GetDirectories("Logs")
-                                       .Where(dir => !dir.EndsWith("Admin"))
+                                       .Where(dir => !dir.EndsWith("admin"))
                                        .ToArray();
 
             var selectedDirectory = DisplayMenu.CreateMenu(directories);
@@ -48,10 +48,11 @@ public class TranslateFromMorsecode(ReadTranslationSet translationSet) : ITransl
 
             var decryptedMessage = Decrypt.DecryptMessage(Convert.FromHexString(message), aesKey);
 
-            var decompressedMessage = Decompress.DecompressBytes(Encoding.UTF8.GetBytes(decryptedMessage));
+            var decompressedMessage = Decompress.DecompressBytes(decryptedMessage);
 
             Console.WriteLine(Encoding.UTF8.GetString(decompressedMessage));
 
+            Console.Write("Press any key to continue");
             Console.ReadKey();
         } while (true);
     }

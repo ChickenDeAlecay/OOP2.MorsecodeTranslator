@@ -30,14 +30,18 @@ public class TranslateToMorsecode(ReadTranslationSet translationSet) : ITranslat
             aesKey = Console.ReadLine();
         }
 
-        var compressedMessage = Compress.CompressBytes(Encoding.UTF8.GetBytes(usersString));
+        var bytes = Encoding.UTF8.GetBytes(usersString);
+
+        var compressedMessage = Compress.CompressBytes(bytes);
 
         var encryptedMessage = Encrypt.EncryptMessage(compressedMessage, aesKey);
 
         var message = this.Translate(Convert.ToHexString(encryptedMessage));
 
-        CreateLog.Log(userName, message);
+        var logLocation = CreateLog.Log(userName, message);
 
+        Console.WriteLine("Your message:\n" + message + "\nThis has been logged at " + logLocation);
+        Console.Write("Press any key to continue");
         Console.ReadKey();
     }
 
