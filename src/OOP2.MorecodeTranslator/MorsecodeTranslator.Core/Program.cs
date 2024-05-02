@@ -183,6 +183,7 @@ public static class Program
                     translatedMessage = translate.ProcessData(encryptedMessage, encryptionKey);
 
                     Console.WriteLine("Your message: " + translatedMessage);
+                    Console.ReadKey();
 
                     exit = false;
                     break;
@@ -194,6 +195,7 @@ public static class Program
                     translatedMessage = translate.ProcessData(encryptedMessage, encryptionKey);
 
                     Console.WriteLine("Your message: " + translatedMessage);
+                    Console.ReadKey();
 
                     exit = false;
                     break;

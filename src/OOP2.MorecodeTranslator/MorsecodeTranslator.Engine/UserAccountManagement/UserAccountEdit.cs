@@ -2,7 +2,7 @@
 
 using MorsecodeTranslator.Engine.Logging;
 
-public class UserAccountEdit : BaseUserAccount
+public abstract class UserAccountEdit : BaseUserAccount
 {
     public static void EditUser(string path, string? name, ILog log)
     {

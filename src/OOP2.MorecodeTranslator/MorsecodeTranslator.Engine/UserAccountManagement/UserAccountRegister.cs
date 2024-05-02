@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using MorsecodeTranslator.Engine.Logging;
 
-public class UserAccountRegister : BaseUserAccount
+public abstract class UserAccountRegister : BaseUserAccount
 {
     public static void RegisterUser(string path, string? name, ILog log)
     {

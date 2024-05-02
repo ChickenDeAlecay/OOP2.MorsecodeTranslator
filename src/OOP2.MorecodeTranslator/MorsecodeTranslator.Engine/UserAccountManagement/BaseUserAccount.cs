@@ -91,9 +91,6 @@ public abstract class BaseUserAccount
 
         for (var i = 0; i < usersInfo.Count; i++) userUsernames[i] = usersInfo[i].Split(',')[0];
 
-
-        userUsernames[usersInfo.Count] = "Exit";
-
         return DisplayMenu.CreateMenu(userUsernames);
     }
 

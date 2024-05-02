@@ -1,6 +1,6 @@
 ﻿namespace MorsecodeTranslator.Engine.UserAccountManagement;
 
-public class UserAccountLogin : BaseUserAccount
+public abstract class UserAccountLogin : BaseUserAccount
 {
     public static User LoginUser(string path)
     {

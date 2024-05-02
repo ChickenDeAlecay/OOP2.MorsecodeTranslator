@@ -2,7 +2,7 @@
 
 using MorsecodeTranslator.Engine.Logging;
 
-public class UserAccountDelete : BaseUserAccount
+public abstract class UserAccountDelete : BaseUserAccount
 {
     public static void DeleteUser(string path, string? name, ILog log)
     {
