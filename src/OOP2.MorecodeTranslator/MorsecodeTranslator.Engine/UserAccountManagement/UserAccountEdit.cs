@@ -6,100 +6,125 @@ public abstract class UserAccountEdit : BaseUserAccount
 {
     public static void EditUser(string path, string? name, ILog log)
     {
-        do
+        try
         {
-            var usersInfo = ReadUsersFile.GetUsersInfo(path);
-
-            var selectedAccount = BaseUserAccount.DisplayAllAccounts(usersInfo);
-
-            if (selectedAccount == usersInfo.Count + 1) break;
-
-            string?[] selectedUser = usersInfo[selectedAccount - 1].Split(',');
-
-            bool finishedEditing;
             do
             {
-                Console.Clear();
-                Console.WriteLine("Do you want to change the Username or Password");
-                var fieldToEdit = DisplayMenu.CreateMenu(new[] { "Username", "Password" });
+                var usersInfo = ReadUsersFile.GetUsersInfo(path);
 
-                switch (fieldToEdit)
+                var selectedAccount = BaseUserAccount.DisplayAllAccounts(usersInfo);
+
+                if (selectedAccount == usersInfo.Count + 1) break;
+
+                string?[] selectedUser = usersInfo[selectedAccount - 1].Split(',');
+
+                bool finishedEditing;
+                do
                 {
-                    case 1:
-                        var oldName = usersInfo[0];
-                        usersInfo[selectedAccount - 1] = UserAccountEdit.ChangeUsername(path) + ',' + selectedUser[1] +
-                                                         ',' + selectedUser[2];
-                        BaseUserAccount.UpdateFile(usersInfo, path);
-                        log.CreateLog(name,
-                            $"{name} has updated a user.\nUsers name updated to {usersInfo[0]} from {oldName}");
-                        finishedEditing = true;
-                        break;
-                    case 2:
-                        usersInfo[selectedAccount - 1] = selectedUser[0] + ',' +
-                                                         UserAccountEdit.ChangePassword(int.Parse(selectedUser[2] ??
-                                                             throw new InvalidOperationException())) + ',' +
-                                                         selectedUser[2];
-                        BaseUserAccount.UpdateFile(usersInfo, path);
-                        log.CreateLog(name, $"{name} has updated a user.\n{usersInfo[0]}'s password has been updated");
-                        finishedEditing = true;
-                        break;
-                    case 3:
-                        finishedEditing = true;
-                        break;
-                    default:
-                        finishedEditing = false;
-                        break;
-                }
-            } while (finishedEditing == false);
-        } while (true);
+                    Console.Clear();
+                    Console.WriteLine("Do you want to change the Username or Password");
+                    var fieldToEdit = DisplayMenu.CreateMenu(new[] { "Username", "Password" });
+
+                    switch (fieldToEdit)
+                    {
+                        case 1:
+                            var oldName = usersInfo[0];
+                            usersInfo[selectedAccount - 1] =
+                                UserAccountEdit.ChangeUsername(path) + ',' + selectedUser[1] +
+                                ',' + selectedUser[2];
+                            BaseUserAccount.UpdateFile(usersInfo, path);
+                            log.CreateLog(name,
+                                $"{name} has updated a user.\nUsers name updated to {usersInfo[0]} from {oldName}");
+                            finishedEditing = true;
+                            break;
+                        case 2:
+                            usersInfo[selectedAccount - 1] = selectedUser[0] + ',' +
+                                                             UserAccountEdit.ChangePassword(int.Parse(selectedUser[2] ??
+                                                                 throw new InvalidOperationException())) + ',' +
+                                                             selectedUser[2];
+                            BaseUserAccount.UpdateFile(usersInfo, path);
+                            log.CreateLog(name,
+                                $"{name} has updated a user.\n{usersInfo[0]}'s password has been updated");
+                            finishedEditing = true;
+                            break;
+                        case 3:
+                            finishedEditing = true;
+                            break;
+                        default:
+                            finishedEditing = false;
+                            break;
+                    }
+                } while (finishedEditing == false);
+            } while (true);
+        }
+        catch (Exception exception)
+        {
+            log.CreateLog(name, $"An error occurred while editing a user: {exception.Message}");
+        }
     }
 
     private static string ChangeUsername(string path)
     {
-        Console.Clear();
-        string? newUsername;
-        do
+        try
         {
-            Console.WriteLine("Enter the new Username for the account");
-            newUsername = Console.ReadLine();
-
-            if (BaseUserAccount.CheckUserExists(newUsername, path))
+            Console.Clear();
+            string? newUsername;
+            do
             {
-                Console.Clear();
-                Console.WriteLine("\nUsername already exists\n\n");
-                continue;
-            }
+                Console.WriteLine("Enter the new Username for the account");
+                newUsername = Console.ReadLine();
 
-            break;
-        } while (true);
+                if (BaseUserAccount.CheckUserExists(newUsername, path))
+                {
+                    Console.Clear();
+                    Console.WriteLine("\nUsername already exists\n\n");
+                    continue;
+                }
 
-        return newUsername ?? throw new InvalidOperationException();
+                break;
+            } while (true);
+
+            return newUsername ?? throw new InvalidOperationException();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            return string.Empty;
+        }
     }
 
     private static string ChangePassword(int salt)
     {
-        Console.Clear();
-        string? newPassword;
-        do
+        try
         {
-            Console.Write("Enter the accounts Password: ");
-            newPassword = BaseUserAccount.HidePassword();
-
-            Console.Write("\nRepeat the Password: ");
-            var repeatedPassword = BaseUserAccount.HidePassword();
-
-            if (newPassword != repeatedPassword)
+            Console.Clear();
+            string? newPassword;
+            do
             {
-                Console.Clear();
-                Console.WriteLine("\nPasswords do not match\n\n");
-                continue;
-            }
+                Console.Write("Enter the accounts Password: ");
+                newPassword = BaseUserAccount.HidePassword();
 
-            newPassword = BaseUserAccount.HashPassword(newPassword, salt);
+                Console.Write("\nRepeat the Password: ");
+                var repeatedPassword = BaseUserAccount.HidePassword();
 
-            break;
-        } while (true);
+                if (newPassword != repeatedPassword)
+                {
+                    Console.Clear();
+                    Console.WriteLine("\nPasswords do not match\n\n");
+                    continue;
+                }
 
-        return newPassword;
+                newPassword = BaseUserAccount.HashPassword(newPassword, salt);
+
+                break;
+            } while (true);
+
+            return newPassword;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            return string.Empty;
+        }
     }
 }

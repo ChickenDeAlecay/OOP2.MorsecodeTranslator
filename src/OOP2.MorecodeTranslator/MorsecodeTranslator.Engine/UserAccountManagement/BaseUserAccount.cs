@@ -45,42 +45,58 @@ public abstract class BaseUserAccount
 
     internal static bool VerifyPassword(string? userUsername, string userPassword, string path)
     {
-        var usersInfo = ReadUsersFile.GetUsersInfo(path);
-
-        var salt = 0;
-        var hash = string.Empty;
-
-        foreach (var users in usersInfo)
+        try
         {
-            var userSplit = users.Split(",");
-            if (userSplit[0] == userUsername)
+            var usersInfo = ReadUsersFile.GetUsersInfo(path);
+
+            var salt = 0;
+            var hash = string.Empty;
+
+            foreach (var users in usersInfo)
             {
-                hash = userSplit[1];
-                salt = int.Parse(userSplit[2]);
+                var userSplit = users.Split(",");
+                if (userSplit[0] == userUsername)
+                {
+                    hash = userSplit[1];
+                    salt = int.Parse(userSplit[2]);
+                }
             }
+
+            var hashToCompare = BaseUserAccount.HashPassword(userPassword, salt);
+
+            return string.Equals(hashToCompare, hash);
         }
-
-        var hashToCompare = BaseUserAccount.HashPassword(userPassword, salt);
-
-        return string.Equals(hashToCompare, hash);
+        catch (Exception exception)
+        {
+            Console.WriteLine($"An error occurred: {exception.Message}");
+            return false;
+        }
     }
 
     //from: https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-8.0
     internal static string HashPassword(string userPassword, int rndNumSalt)
     {
-        // Generate a 128-bit salt using a sequence of
-        // cryptographically strong random bytes.
-        var salt = BitConverter.GetBytes(rndNumSalt);
+        try
+        {
+            // Generate a 128-bit salt using a sequence of
+            // cryptographically strong random bytes.
+            var salt = BitConverter.GetBytes(rndNumSalt);
 
-        // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
-        var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            userPassword,
-            salt,
-            KeyDerivationPrf.HMACSHA256,
-            100000,
-            256 / 8));
+            // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
+            var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                userPassword,
+                salt,
+                KeyDerivationPrf.HMACSHA256,
+                100000,
+                256 / 8));
 
-        return hashed;
+            return hashed;
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine($"An error occurred: {exception.Message}");
+            return string.Empty;
+        }
     }
 
     internal static int DisplayAllAccounts(List<string> usersInfo)
@@ -96,6 +112,13 @@ public abstract class BaseUserAccount
 
     internal static void UpdateFile(List<string> updatedFile, string path)
     {
-        File.WriteAllLines(path, updatedFile, Encoding.UTF8);
+        try
+        {
+            File.WriteAllLines(path, updatedFile, Encoding.UTF8);
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine($"An error occurred: {exception.Message}");
+        }
     }
 }
