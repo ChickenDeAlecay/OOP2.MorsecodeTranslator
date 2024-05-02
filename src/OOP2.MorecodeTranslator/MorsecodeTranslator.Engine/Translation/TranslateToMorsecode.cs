@@ -4,48 +4,27 @@ using System.Text;
 using MorsecodeTranslator.Engine.Compression;
 using MorsecodeTranslator.Engine.Encryption;
 
-public class TranslateToMorsecode(ReadTranslationSet translationSet) : ITranslate
+public class TranslateToMorsecode : ITranslate
 {
-    public string[,] TranslationTable { get; set; } = translationSet.TranslationSet;
+    private readonly IAesEncryption encrypt;
+    private readonly IGzip gzip;
 
-    public void GetUserInput(string? userName)
+    public TranslateToMorsecode(ReadTranslationSet translationSet, IGzip gzip, IAesEncryption encrypt)
     {
-        Console.WriteLine("Enter the string you would like to translate to morsecode");
-
-        var usersString = Console.ReadLine();
-
-        while (string.IsNullOrEmpty(usersString))
-        {
-            Console.WriteLine("Invalid input. Please enter a non-empty string.");
-            usersString = Console.ReadLine();
-        }
-
-        Console.WriteLine("Enter a key for your message encryption");
-
-        var aesKey = Console.ReadLine();
-
-        while (string.IsNullOrEmpty(aesKey))
-        {
-            Console.WriteLine("Invalid input. Please enter a non-empty key.");
-            aesKey = Console.ReadLine();
-        }
-
-        var message = this.ProcessData(usersString, aesKey);
-
-        var logLocation = CreateLog.Log(userName, message);
-
-        Console.WriteLine("Your message:\n" + message + "\nThis has been logged at " + logLocation);
-        Console.Write("Press any key to continue");
-        Console.ReadKey();
+        this.TranslationTable = translationSet.TranslationSet;
+        this.gzip = gzip;
+        this.encrypt = encrypt;
     }
+
+    public string[,] TranslationTable { get; set; }
 
     public string ProcessData(string origionalMessage, string encryptionKey)
     {
         var bytes = Encoding.UTF8.GetBytes(origionalMessage);
 
-        var compressedMessage = Compress.CompressBytes(bytes);
+        var compressedMessage = this.gzip.CompressBytes(bytes);
 
-        var encryptedMessage = Encrypt.EncryptMessage(compressedMessage, encryptionKey);
+        var encryptedMessage = this.encrypt.EncryptMessage(compressedMessage, encryptionKey);
 
         var processedMessage = this.Translate(Convert.ToHexString(encryptedMessage));
 

@@ -1,8 +1,10 @@
 ﻿namespace MorsecodeTranslator.Engine.UserAccountManagement;
 
+using MorsecodeTranslator.Engine.Logging;
+
 public class UserAccountDelete : BaseUserAccount
 {
-    public static void DeleteUser(string path, string? name)
+    public static void DeleteUser(string path, string? name, ILog log)
     {
         do
         {
@@ -15,7 +17,7 @@ public class UserAccountDelete : BaseUserAccount
             if (selectedAccount > usersInfo.Count + 1) continue;
 
             UserAccountDelete.RemoveUser(selectedAccount, usersInfo, path);
-            CreateLog.Log(name,
+            log.CreateLog(name,
                 $"{name} has deleted a user.\n{usersInfo[selectedAccount].Split(',')[0]} has been deleted");
         } while (true);
     }

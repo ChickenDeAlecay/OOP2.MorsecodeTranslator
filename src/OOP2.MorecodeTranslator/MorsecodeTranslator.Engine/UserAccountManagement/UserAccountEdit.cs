@@ -1,8 +1,10 @@
 ﻿namespace MorsecodeTranslator.Engine.UserAccountManagement;
 
+using MorsecodeTranslator.Engine.Logging;
+
 public class UserAccountEdit : BaseUserAccount
 {
-    public static void EditUser(string path, string? name)
+    public static void EditUser(string path, string? name, ILog log)
     {
         do
         {
@@ -19,7 +21,7 @@ public class UserAccountEdit : BaseUserAccount
             {
                 Console.Clear();
                 Console.WriteLine("Do you want to change the Username or Password");
-                var fieldToEdit = DisplayMenu.CreateMenu(["Username", "Password"]);
+                var fieldToEdit = DisplayMenu.CreateMenu(new[] { "Username", "Password" });
 
                 switch (fieldToEdit)
                 {
@@ -28,7 +30,7 @@ public class UserAccountEdit : BaseUserAccount
                         usersInfo[selectedAccount - 1] = UserAccountEdit.ChangeUsername(path) + ',' + selectedUser[1] +
                                                          ',' + selectedUser[2];
                         BaseUserAccount.UpdateFile(usersInfo, path);
-                        CreateLog.Log(name,
+                        log.CreateLog(name,
                             $"{name} has updated a user.\nUsers name updated to {usersInfo[0]} from {oldName}");
                         finishedEditing = true;
                         break;
@@ -38,7 +40,7 @@ public class UserAccountEdit : BaseUserAccount
                                                              throw new InvalidOperationException())) + ',' +
                                                          selectedUser[2];
                         BaseUserAccount.UpdateFile(usersInfo, path);
-                        CreateLog.Log(name, $"{name} has updated a user.\n{usersInfo[0]}'s password has been updated");
+                        log.CreateLog(name, $"{name} has updated a user.\n{usersInfo[0]}'s password has been updated");
                         finishedEditing = true;
                         break;
                     case 3:

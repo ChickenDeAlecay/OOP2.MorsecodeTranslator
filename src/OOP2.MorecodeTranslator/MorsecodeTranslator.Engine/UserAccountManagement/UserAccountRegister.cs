@@ -2,10 +2,11 @@
 
 using System.Security.Cryptography;
 using System.Text;
+using MorsecodeTranslator.Engine.Logging;
 
 public class UserAccountRegister : BaseUserAccount
 {
-    public static void RegisterUser(string path, string? name)
+    public static void RegisterUser(string path, string? name, ILog log)
     {
         Console.Clear();
         do
@@ -38,7 +39,7 @@ public class UserAccountRegister : BaseUserAccount
             userPassword = BaseUserAccount.HashPassword(userPassword, rndNumSalt);
             UserAccountRegister.WriteUserToFile(userUsername, userPassword, rndNumSalt, path);
             Directory.CreateDirectory($"Logs\\{userUsername}");
-            CreateLog.Log(name,
+            log.CreateLog(name,
                 $"New user {userUsername} has been created.\nNew directory created at: Logs\\{userUsername}");
             break;
         } while (true);

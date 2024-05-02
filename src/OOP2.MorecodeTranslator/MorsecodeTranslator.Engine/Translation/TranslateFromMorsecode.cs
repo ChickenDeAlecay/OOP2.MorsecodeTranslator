@@ -4,60 +4,27 @@ using System.Text;
 using MorsecodeTranslator.Engine.Compression;
 using MorsecodeTranslator.Engine.Encryption;
 
-public class TranslateFromMorsecode(ReadTranslationSet translationSet) : ITranslate
+public class TranslateFromMorsecode : ITranslate
 {
-    public string[,] TranslationTable { get; set; } = translationSet.TranslationSet;
+    private readonly IAesEncryption decrypt;
+    private readonly IGzip gzip;
 
-    public void GetUserInput(string? userName)
+    public TranslateFromMorsecode(ReadTranslationSet translationSet, IGzip gzip, IAesEncryption decrypt)
     {
-        do
-        {
-            Console.Clear();
-
-            var directories = Directory.GetDirectories("Logs")
-                                       .Where(dir => !dir.EndsWith("admin"))
-                                       .ToArray();
-
-            var selectedDirectory = DisplayMenu.CreateMenu(directories);
-
-            if (selectedDirectory == directories.Length + 1) break;
-            if (selectedDirectory > directories.Length + 1) continue;
-
-            Console.Clear();
-
-            var files = Directory.GetFiles(directories[selectedDirectory - 1]);
-
-            var selectedFile = DisplayMenu.CreateMenu(files);
-
-            if (selectedFile == files.Length + 1) break;
-            if (selectedFile > files.Length + 1) continue;
-
-            var message = File.ReadAllText(files[selectedFile - 1]);
-
-            message = this.Translate(message);
-
-            Console.WriteLine("Enter a key for your message decryption");
-
-            var aesKey = Console.ReadLine();
-
-            while (string.IsNullOrEmpty(aesKey))
-            {
-                Console.WriteLine("Invalid input. Please enter a non-empty key.");
-                aesKey = Console.ReadLine();
-            }
-
-            var decryptedMessage = this.ProcessData(message, aesKey);
-
-            Console.Write("Press any key to continue");
-            Console.ReadKey();
-        } while (true);
+        this.TranslationTable = translationSet.TranslationSet;
+        this.gzip = gzip;
+        this.decrypt = decrypt;
     }
 
-    private string ProcessData(string message, string key)
-    {
-        var decryptedMessage = Decrypt.DecryptMessage(Convert.FromHexString(message), key);
+    public string[,] TranslationTable { get; set; }
 
-        var decompressedMessage = Decompress.DecompressBytes(decryptedMessage);
+    public string ProcessData(string message, string key)
+    {
+        var translatedMessage = this.Translate(message);
+
+        var decryptedMessage = this.decrypt.DecryptMessage(Convert.FromHexString(translatedMessage), key);
+
+        var decompressedMessage = this.gzip.DecompressBytes(decryptedMessage);
 
         return Encoding.UTF8.GetString(decompressedMessage);
     }

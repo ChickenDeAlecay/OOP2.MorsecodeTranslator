@@ -2,7 +2,7 @@
 
 public class User(string? name, bool created)
 {
-    public string? Name { get; set; } = name;
+    public string? Name { get; } = name;
 
-    public bool Created { get; set; } = created;
+    public bool Created { get; } = created;
 }

@@ -1,8 +1,18 @@
 ﻿namespace MorsecodeTranslator.Engine.Training;
 
-public class TrainMorsecode(ReadTranslationSet translationSet) : ITrain
+using MorsecodeTranslator.Engine.Logging;
+
+public class TrainMorsecode : ITrain
 {
-    public string[,] TranslationTable { get; set; } = translationSet.TranslationSet;
+    private readonly ILog log;
+
+    public TrainMorsecode(ReadTranslationSet translationSet, ILog log)
+    {
+        this.TranslationTable = translationSet.TranslationSet;
+        this.log = log;
+    }
+
+    public string[,] TranslationTable { get; set; }
     public string[] TrainingResults { get; set; } = new string[15];
 
     public void Train(string? name)
@@ -32,7 +42,7 @@ public class TrainMorsecode(ReadTranslationSet translationSet) : ITrain
         Console.Clear();
         foreach (var result in this.TrainingResults) Console.WriteLine(result);
 
-        CreateLog.Log(name, $"{this.TrainingResults}");
+        this.log.CreateLog(name, $"{this.TrainingResults}");
 
         Console.Write("Press any key to continue.");
         Console.ReadKey();

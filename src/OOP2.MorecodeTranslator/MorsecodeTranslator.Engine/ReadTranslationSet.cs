@@ -9,6 +9,11 @@ public class ReadTranslationSet
         this.TranslationSet = this.GetTranslationSet(filePath);
     }
 
+    public ReadTranslationSet(string[,] translationSet)
+    {
+        this.TranslationSet = translationSet;
+    }
+
     private string[,] GetTranslationSet(string filePath)
     {
         var translationSet = new string[35, 2];
@@ -19,7 +24,7 @@ public class ReadTranslationSet
         var iteration = 0;
         foreach (var lines in translationChar)
         {
-            var alphabetTranslations = lines.Split([' '], 2);
+            var alphabetTranslations = lines.Split(new[] { ' ' }, 2);
 
             translationSet[iteration, 0] = alphabetTranslations[0];
             translationSet[iteration, 1] = alphabetTranslations[1];
@@ -29,7 +34,7 @@ public class ReadTranslationSet
 
         foreach (var lines in translationNum)
         {
-            var numberTranslations = lines.Split([' '], 2);
+            var numberTranslations = lines.Split(new[] { ' ' }, 2);
 
             translationSet[iteration, 0] = numberTranslations[0];
             translationSet[iteration, 1] = numberTranslations[1];
