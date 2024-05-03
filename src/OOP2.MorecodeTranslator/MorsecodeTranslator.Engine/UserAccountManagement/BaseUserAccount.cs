@@ -2,9 +2,27 @@
 
 using System.Text;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using MorsecodeTranslator.Engine.UserConsoleInput;
 
 public abstract class BaseUserAccount
 {
+    internal static string GetUserName()
+    {
+        do
+        {
+            Console.Write("Enter the accounts Username: ");
+            var userUsername = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(userUsername) || userUsername.Any(char.IsPunctuation))
+            {
+                Console.WriteLine("Please enter a valid name");
+                continue;
+            }
+
+            return userUsername;
+        } while (true);
+    }
+
     internal static string HidePassword()
     {
         var userPassword = string.Empty;

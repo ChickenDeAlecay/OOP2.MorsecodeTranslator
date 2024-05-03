@@ -1,6 +1,7 @@
 ﻿namespace MorsecodeTranslator.Engine.UserAccountManagement;
 
 using MorsecodeTranslator.Engine.Logging;
+using MorsecodeTranslator.Engine.UserConsoleInput;
 
 public abstract class UserAccountEdit : BaseUserAccount
 {
@@ -71,8 +72,7 @@ public abstract class UserAccountEdit : BaseUserAccount
             string? newUsername;
             do
             {
-                Console.WriteLine("Enter the new Username for the account");
-                newUsername = Console.ReadLine();
+                newUsername = BaseUserAccount.GetUserName();
 
                 if (BaseUserAccount.CheckUserExists(newUsername, path))
                 {

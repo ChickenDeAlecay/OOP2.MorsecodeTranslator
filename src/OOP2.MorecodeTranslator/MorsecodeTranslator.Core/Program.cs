@@ -156,7 +156,7 @@ public static class Program
                     translate = new TranslateToMorsecode(translationSetInternational, gzip, aesEncryption);
                     translatedMessage = translate.ProcessData(originalMessage, encryptionKey);
 
-                    messageLog = log.CreateLog(user.Name, translatedMessage);
+                    messageLog = log.CreateLog(user.Name, translatedMessage, "I");
                     Console.WriteLine("Your message: " + translatedMessage + "\nLog created: " + messageLog);
                     Console.ReadKey();
 
@@ -169,14 +169,20 @@ public static class Program
                     translate = new TranslateToMorsecode(translationSetAmerican, gzip, aesEncryption);
                     translatedMessage = translate.ProcessData(originalMessage, encryptionKey);
 
-                    messageLog = log.CreateLog(user.Name, translatedMessage);
+                    messageLog = log.CreateLog(user.Name, translatedMessage, "A");
                     Console.WriteLine("Your message: " + translatedMessage + "\nLog created: " + messageLog);
                     Console.ReadKey();
 
                     exit = false;
                     break;
                 case 3:
-                    encryptedMessage = log.ReadLog();
+                    encryptedMessage = log.ReadLog("I");
+                    if (string.IsNullOrEmpty(encryptedMessage))
+                    {
+                        exit = false;
+                        break;
+                    }
+
                     encryptionKey = GetUserInput.GetUserKey();
 
                     translate = new TranslateFromMorsecode(translationSetInternational, gzip, aesEncryption);
@@ -188,7 +194,13 @@ public static class Program
                     exit = false;
                     break;
                 case 4:
-                    encryptedMessage = log.ReadLog();
+                    encryptedMessage = log.ReadLog("A");
+                    if (string.IsNullOrEmpty(encryptedMessage))
+                    {
+                        exit = false;
+                        break;
+                    }
+
                     encryptionKey = GetUserInput.GetUserKey();
 
                     translate = new TranslateFromMorsecode(translationSetAmerican, gzip, aesEncryption);

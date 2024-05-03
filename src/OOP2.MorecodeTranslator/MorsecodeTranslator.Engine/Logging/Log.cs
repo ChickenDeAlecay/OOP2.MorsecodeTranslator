@@ -1,7 +1,18 @@
 ﻿namespace MorsecodeTranslator.Engine.Logging;
 
+using MorsecodeTranslator.Engine.UserConsoleInput;
+
 public class Log : ILog
 {
+    public string CreateLog(string? userName, string message, string setId)
+    {
+        var newFile = $"Logs\\{userName}\\{setId}-{DateTime.Now:dd'-'MM'-'yyyy'--'HH'-'mm'-'ss}.txt";
+
+        File.WriteAllText(newFile, message);
+
+        return newFile;
+    }
+
     public string CreateLog(string? userName, string message)
     {
         var newFile = $"Logs\\{userName}\\{DateTime.Now:dd'-'MM'-'yyyy'--'HH'-'mm'-'ss}.txt";
@@ -11,7 +22,7 @@ public class Log : ILog
         return newFile;
     }
 
-    public string ReadLog()
+    public string ReadLog(string setId)
     {
         do
         {
@@ -28,7 +39,9 @@ public class Log : ILog
 
             Console.Clear();
 
-            var files = Directory.GetFiles(directories[selectedDirectory - 1]);
+            var files = Directory.GetFiles(directories[selectedDirectory - 1])
+                                 .Where(file => Path.GetFileName(file)?.StartsWith(setId[0].ToString()) == true)
+                                 .ToArray();
 
             var selectedFile = DisplayMenu.CreateMenu(files);
 

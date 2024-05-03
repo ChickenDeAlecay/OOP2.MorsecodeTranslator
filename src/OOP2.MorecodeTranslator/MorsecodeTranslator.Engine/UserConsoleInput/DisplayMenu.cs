@@ -1,4 +1,4 @@
-﻿namespace MorsecodeTranslator.Engine;
+﻿namespace MorsecodeTranslator.Engine.UserConsoleInput;
 
 public static class DisplayMenu
 {
